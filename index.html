@@ -188,7 +188,7 @@
             cursor: pointer;
             opacity: 0.5;
             transition: opacity 0.3s ease-in-out;
-            visibility: hidden; /* Caché par défaut */
+            visibility: hidden;
             height: 0;
             overflow: hidden;
             padding: 0;
@@ -203,6 +203,21 @@
 
         #undoBtn:hover {
             opacity: 1;
+        }
+
+        /* Style pour le bouton de réinitialisation */
+        #resetBtn {
+            margin-top: 25px;
+            background: none;
+            border: none;
+            color: rgba(233, 69, 96, 0.6);
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+
+        #resetBtn:hover {
+            color: var(--accent-color);
         }
     </style>
 </head>
@@ -228,6 +243,7 @@
         </main>
         
         <button id="undoBtn">Annuler la dernière action</button>
+        <button id="resetBtn">Réinitialiser la progression</button>
 
         <div class="instructions">
             <strong>Conseil :</strong> Pour une expérience optimale, ajoutez cette page à votre écran d'accueil via le menu Partager de Safari !
@@ -255,13 +271,14 @@
             const actionsGridEl = document.getElementById('actionsGrid');
             const xpPopupEl = document.getElementById('xpPopup');
             const undoBtn = document.getElementById('undoBtn');
+            const resetBtn = document.getElementById('resetBtn');
 
             // --- ÉTAT DE L'APPLICATION ---
             let player = {
                 level: 1,
                 xp: 0
             };
-            let actionHistory = []; // Remplace la variable lastActionXP par un tableau
+            let actionHistory = [];
             let undoTimeout;
 
             // --- FONCTIONS PRINCIPALES ---
@@ -290,14 +307,13 @@
                     triggerLevelUpAnimation();
                 }
 
-                // Ajout de l'action à l'historique
                 actionHistory.push(amount);
                 showUndoButton();
             }
 
             function undoLastAction() {
                 if (actionHistory.length > 0) {
-                    const lastActionXP = actionHistory.pop(); // Récupère et supprime la dernière action
+                    const lastActionXP = actionHistory.pop();
                     player.xp -= lastActionXP;
                     
                     let xpForCurrentLevel = getXPForLevel(player.level);
@@ -311,8 +327,21 @@
                     if (actionHistory.length === 0) {
                         hideUndoButton();
                     } else {
-                        showUndoButton(); // Relance le timer si d'autres actions sont présentes
+                        showUndoButton();
                     }
+                }
+            }
+
+            function resetProgress() {
+                if (confirm("Êtes-vous sûr de vouloir réinitialiser votre progression ? Cette action est irréversible.")) {
+                    localStorage.removeItem('xpSocialData');
+                    localStorage.removeItem('xpSocialHistory');
+                    player.level = 1;
+                    player.xp = 0;
+                    actionHistory = [];
+                    updateUI();
+                    hideUndoButton();
+                    alert("Votre progression a été réinitialisée.");
                 }
             }
 
@@ -395,6 +424,7 @@
 
             // --- ÉVÉNEMENTS ---
             undoBtn.addEventListener('click', undoLastAction);
+            resetBtn.addEventListener('click', resetProgress);
 
 
             // --- INITIALISATION DE L'APPLICATION ---
