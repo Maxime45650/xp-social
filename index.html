@@ -261,7 +261,7 @@
                 level: 1,
                 xp: 0
             };
-            let lastActionXP = 0; // Ajout d'une variable pour stocker la dernière XP ajoutée
+            let actionHistory = []; // Remplace la variable lastActionXP par un tableau
             let undoTimeout;
 
             // --- FONCTIONS PRINCIPALES ---
@@ -290,16 +290,16 @@
                     triggerLevelUpAnimation();
                 }
 
-                // Activation du bouton d'annulation
-                lastActionXP = amount;
+                // Ajout de l'action à l'historique
+                actionHistory.push(amount);
                 showUndoButton();
             }
 
             function undoLastAction() {
-                if (lastActionXP !== 0) {
+                if (actionHistory.length > 0) {
+                    const lastActionXP = actionHistory.pop(); // Récupère et supprime la dernière action
                     player.xp -= lastActionXP;
                     
-                    // Gérer le retour de niveau si nécessaire
                     let xpForCurrentLevel = getXPForLevel(player.level);
                     while (player.xp < xpForCurrentLevel && player.level > 1) {
                         player.level--;
@@ -308,8 +308,11 @@
 
                     updateUI();
                     saveData();
-                    hideUndoButton();
-                    lastActionXP = 0;
+                    if (actionHistory.length === 0) {
+                        hideUndoButton();
+                    } else {
+                        showUndoButton(); // Relance le timer si d'autres actions sont présentes
+                    }
                 }
             }
 
@@ -318,7 +321,7 @@
                 clearTimeout(undoTimeout);
                 undoTimeout = setTimeout(() => {
                     hideUndoButton();
-                }, 5000); // Le bouton disparaît après 5 secondes
+                }, 5000);
             }
 
             function hideUndoButton() {
@@ -341,12 +344,17 @@
 
             function saveData() {
                 localStorage.setItem('xpSocialData', JSON.stringify(player));
+                localStorage.setItem('xpSocialHistory', JSON.stringify(actionHistory));
             }
 
             function loadData() {
                 const savedData = localStorage.getItem('xpSocialData');
                 if (savedData) {
                     player = JSON.parse(savedData);
+                }
+                const savedHistory = localStorage.getItem('xpSocialHistory');
+                if (savedHistory) {
+                    actionHistory = JSON.parse(savedHistory);
                 }
             }
             
