@@ -9,141 +9,301 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="XP Social">
     
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzI5MmYzcCIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0zMS4xIDY4LjRMMzYgNTQuN2wtNi44LTExLjJoNC42bDQuNiA4IDQuNS04aDQuN2wtNi44IDExLjEgNC44IDEzLjdoLTQuOWwtMy4yLTguOS0zLjEgOC45ek01My4zIDY4LjVWNDEuN2g0Ljl2OC42aDcuMXY0LjZoLTcuMXY4LjdjMCAxLjkuNiAyLjggMi40IDIuOGgxLjN2NC41eiIvPjwvc3ZnPg==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzAwNjlGNiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0zMS4xIDY4LjRMMzYgNTQuN2wtNi44LTExLjJoNC42bDQuNiA4IDQuNS04aDQuN2wtNi44IDExLjEgNC44IDEzLjdoLTQuOWwtMy4yLTguOS0zLjEgOC45ek01My4zIDY4LjVWNDEuN2g0Ljl2OC42aDcuMXY0LjZoLTcuMXY4LjdjMCAxLjkuNiAyLjggMi40IDIuOGgxLjN2NC41eiIvPjwvc3ZnPg==">
 
     <link rel="manifest" id="manifest">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&family=Fredoka+One&display=swap" rel="stylesheet">
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
         :root {
-            --bg-color: #1a1a2e;
-            --card-color: #16213e;
-            --primary-color: #0f3460;
-            --accent-color: #e94560;
-            --text-color: #e0e0e0;
-            --xp-color: #32de84;
-            --level-up-color: #ffcc00;
+            --primary: #0069F6;
+            --primary-light: #E6F0FF;
+            --secondary: #10B981;
+            --accent: #8B5CF6;
+            --neutral-dark: #1F2937;
+            --neutral-light: #F8FAFC;
+            --neutral-border: #E2E8F0;
+            --white: #FFFFFF;
+            --success: #22C55E;
+            --warning: #F59E0B;
+            --bg-color: #F1F5F9;
         }
 
-        html {
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-        }
-        *, *:before, *:after {
-            box-sizing: inherit;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
+            background: var(--bg-color);
+            color: var(--neutral-dark);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            -webkit-tap-highlight-color: transparent;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 400px;
-            background-color: var(--card-color);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 440px;
+            background: var(--white);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--neutral-border);
+        }
+
+        header {
             text-align: center;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--neutral-border);
         }
 
         header h1 {
-            color: var(--accent-color);
-            margin-top: 0;
-            margin-bottom: 20px;
-            font-size: 2.5em;
-            font-weight: 700;
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            font-family: 'Fredoka One', cursive;
+            text-shadow: 2px 2px 0px rgba(0, 105, 246, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        header p {
+            color: #64748B;
+            font-size: 16px;
+            font-weight: 400;
         }
 
         .stats-display {
-            background: var(--primary-color);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 25px;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 28px;
+            border: 1px solid var(--neutral-border);
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
         .level-display {
-            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .level-label {
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 15px;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
         }
 
-        .level-display .level-number {
-            display: inline-block;
-            font-size: 3.5em;
-            font-weight: 700;
-            color: var(--level-up-color);
-            transform: scale(1);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        .progress-ring {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 16px;
         }
 
-        .level-number.level-up-animation {
-            transform: scale(1.5);
+        .progress-bg {
+            fill: none;
+            stroke: var(--neutral-border);
+            stroke-width: 8;
+        }
+
+        .progress-fill {
+            fill: none;
+            stroke: url(#gradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+            transition: stroke-dashoffset 0.7s ease-in-out;
         }
         
+        /* Correction : Centrage du texte de niveau */
+        .level-inside {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .level-inside.level-up {
+            animation: levelUpBounce 0.5s ease-out;
+        }
+
+        @keyframes levelUpBounce {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .xp-progress {
+            margin-bottom: 16px;
+        }
+
         .xp-bar-container {
-            background-color: rgba(0, 0, 0, 0.3);
+            background: var(--neutral-border);
+            height: 12px;
             border-radius: 10px;
-            height: 20px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            position: relative;
         }
 
         .xp-bar {
-            width: 0%;
             height: 100%;
-            background: linear-gradient(90deg, var(--xp-color), #85ffbd);
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
             border-radius: 10px;
-            transition: width 0.5s ease-out;
+            transition: width 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .xp-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: xpShine 1.5s infinite;
+        }
+
+        @keyframes xpShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .xp-text {
-            font-size: 0.9em;
-            font-weight: 400;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748B;
         }
 
         .actions-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .action-btn {
-            background-color: var(--primary-color);
-            color: var(--text-color);
-            border: none;
-            border-radius: 12px;
-            padding: 15px 10px;
-            font-size: 1em;
+            background: var(--white);
+            border: 1px solid var(--neutral-border);
+            border-radius: 16px;
+            padding: 20px;
+            color: var(--neutral-dark);
+            font-size: 16px;
             font-weight: 600;
-            font-family: 'Poppins', sans-serif;
             cursor: pointer;
             transition: all 0.2s ease;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .action-btn:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 6px 15px rgba(0, 105, 246, 0.12);
+            transform: translateY(-3px);
         }
 
         .action-btn:active {
-            transform: scale(0.95);
-            background-color: var(--accent-color);
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 105, 246, 0.05);
         }
 
-        .action-btn .btn-text {
-            display: block;
+        .btn-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .action-btn .btn-xp {
-            font-size: 0.8em;
-            font-weight: 400;
-            color: var(--xp-color);
+
+        .btn-emoji {
+            font-size: 28px;
+        }
+
+        .btn-xp {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        #undoBtn, #resetBtn {
+            background: transparent;
+            border: 1px solid var(--neutral-border);
+            border-radius: 12px;
+            padding: 14px;
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        #undoBtn:hover, #resetBtn:hover {
+            background: var(--neutral-light);
+            border-color: var(--neutral-border);
+        }
+
+        #undoBtn {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        #undoBtn.show {
+            opacity: 1;
+            height: auto;
+            padding: 14px;
+            margin: 0;
+        }
+
+        .instructions {
+            margin-top: 24px;
+            font-size: 13px;
+            color: #94A3B8;
+            text-align: center;
+            line-height: 1.5;
+            padding: 16px;
+            background: var(--neutral-light);
+            border-radius: 12px;
         }
 
         .xp-popup {
@@ -151,129 +311,181 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding: 10px 20px;
-            background-color: rgba(50, 222, 132, 0.9);
-            color: white;
-            border-radius: 10px;
-            font-size: 1.5em;
+            padding: 16px 28px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 16px;
+            font-size: 20px;
             font-weight: 700;
             opacity: 0;
-            transition: all 0.5s ease-out;
+            transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
             pointer-events: none;
-            z-index: 100;
+            z-index: 1000;
+            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.35);
+            font-family: 'Poppins', sans-serif;
         }
 
         .xp-popup.show {
             opacity: 1;
-            transform: translate(-50%, -150%);
+            transform: translate(-50%, -180%);
         }
 
-        .instructions {
-            margin-top: 30px;
-            font-size: 0.8em;
-            color: #aaa;
-            line-height: 1.4;
-        }
-        .instructions strong {
-            color: #ddd;
-        }
-        
-        /* Style pour le bouton d'annulation */
-        #undoBtn {
-            margin-top: 10px;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 0.9em;
-            cursor: pointer;
-            opacity: 0.5;
-            transition: opacity 0.3s ease-in-out;
-            visibility: hidden;
-            height: 0;
-            overflow: hidden;
-            padding: 0;
+        .badge-notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: var(--white);
+            color: var(--neutral-dark);
+            padding: 14px 20px;
+            border-radius: 16px;
+            font-weight: 600;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            z-index: 1001;
+            font-size: 14px;
+            border: 1px solid var(--neutral-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        #undoBtn.show {
-            opacity: 0.8;
-            visibility: visible;
-            height: auto;
-            padding: 5px 10px;
-        }
-
-        #undoBtn:hover {
+        .badge-notification.show {
+            transform: translateX(0);
             opacity: 1;
         }
 
-        /* Style pour le bouton de réinitialisation */
-        #resetBtn {
-            margin-top: 25px;
-            background: none;
-            border: none;
-            color: rgba(233, 69, 96, 0.6);
-            font-size: 0.8em;
-            cursor: pointer;
-            transition: color 0.2s ease-in-out;
+        .badge-icon {
+            color: var(--warning);
+            font-size: 20px;
         }
 
-        #resetBtn:hover {
-            color: var(--accent-color);
+        .confetti {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 998;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 24px 20px;
+            }
+            
+            header h1 {
+                font-size: 32px;
+            }
+            
+            .progress-ring {
+                width: 90px;
+                height: 90px;
+            }
+            
+            .level-inside {
+                font-size: 24px;
+            }
+            
+            .action-btn {
+                padding: 18px 16px;
+            }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         <header>
-            <h1>XP Social 🚀</h1>
+            <h1>✨ XP SOCIAL 🚀</h1>
+            <p>Développez vos compétences sociales progressivement</p>
         </header>
 
         <section class="stats-display">
             <div class="level-display">
-                NIVEAU
-                <span id="levelNumber" class="level-number">1</span>
+                <div class="progress-ring">
+                    <svg viewBox="0 0 64 64">
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#0069F6" />
+                                <stop offset="100%" stop-color="#8B5CF6" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="progress-bg" r="28" cx="32" cy="32"></circle>
+                        <circle class="progress-fill" r="28" cx="32" cy="32" stroke-dasharray="175.93" stroke-dashoffset="175.93"></circle>
+                    </svg>
+                    <div class="level-inside" id="levelNumber">1</div>
+                </div>
+                <div class="level-label">Niveau</div>
             </div>
-            <div class="xp-bar-container">
-                <div id="xpBar" class="xp-bar"></div>
+
+            <div class="xp-progress">
+                <div class="xp-bar-container">
+                    <div id="xpBar" class="xp-bar"></div>
+                </div>
+                <div class="xp-text">
+                    <span id="currentXP">0 XP</span>
+                    <span id="nextLevelXP">100 XP</span>
+                </div>
             </div>
-            <div id="xpText" class="xp-text">0 / 100 XP</div>
         </section>
 
         <main id="actionsGrid" class="actions-grid">
-        </main>
+            </main>
         
-        <button id="undoBtn">Annuler la dernière action</button>
-        <button id="resetBtn">Réinitialiser la progression</button>
+        <div class="action-buttons">
+            <button id="undoBtn">Annuler la dernière action</button>
+            <button id="resetBtn">Réinitialiser la progression</button>
+        </div>
 
         <div class="instructions">
-            <strong>Conseil :</strong> Pour une expérience optimale, ajoutez cette page à votre écran d'accueil via le menu Partager de Safari !
+            <strong>Conseil :</strong> Ajoutez cette page à votre écran d'accueil pour un accès rapide !
         </div>
     </div>
 
     <div id="xpPopup" class="xp-popup"></div>
+    <div id="badgeNotification" class="badge-notification">
+        <span class="badge-icon">🏆</span>
+        <span>Niveau atteint !</span>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- CONFIGURATION FACILE ---
+            // Configuration
             const socialActions = [
-                { id: 'dareApproach', name: 'Oser aller voir quelqu’un', xp: 20, emoji: '🏃‍♂️' },
+                { id: 'dareApproach', name: 'Oser aller voir quelqu\'un', xp: 20, emoji: '🏃‍♂️' },
                 { id: 'smallInteraction', name: 'Petite interaction sociale', xp: 30, emoji: '💬' },
-                { id: 'bigChallenge', name: 'Gros challenge social', xp: 50, emoji: '🗣️' }
+                { id: 'bigInteraction', name: 'Grosse interaction', xp: 50, emoji: '🗣️' }
             ];
 
             const XP_BASE = 100;
             const XP_FACTOR = 1.5;
 
-            // --- ÉLÉMENTS DU DOM ---
+            // DOM Elements
             const levelNumberEl = document.getElementById('levelNumber');
             const xpBarEl = document.getElementById('xpBar');
-            const xpTextEl = document.getElementById('xpText');
+            const currentXpEl = document.getElementById('currentXP');
+            const nextLevelXpEl = document.getElementById('nextLevelXP');
+            const progressFillEl = document.querySelector('.progress-fill');
             const actionsGridEl = document.getElementById('actionsGrid');
             const xpPopupEl = document.getElementById('xpPopup');
             const undoBtn = document.getElementById('undoBtn');
             const resetBtn = document.getElementById('resetBtn');
+            const badgeNotification = document.getElementById('badgeNotification');
 
-            // --- ÉTAT DE L'APPLICATION ---
+            // State
             let player = {
                 level: 1,
                 xp: 0
@@ -281,22 +493,25 @@
             let actionHistory = [];
             let undoTimeout;
 
-            // --- FONCTIONS PRINCIPALES ---
-            function getXPForLevel(level) {
-                if (level <= 1) return 0;
-                return Math.floor(XP_BASE * (Math.pow(XP_FACTOR, level - 1) - 1) / (XP_FACTOR - 1));
+            // Functions
+            function getXPNeededForNextLevel(level) {
+                if (level <= 1) return XP_BASE;
+                return Math.floor(XP_BASE * Math.pow(XP_FACTOR, level - 1));
             }
             
             function grantXP(amount) {
+                // Sauvegarde de l'état actuel pour l'annulation
+                actionHistory.push({ level: player.level, xp: player.xp });
                 player.xp += amount;
                 
                 let leveledUp = false;
-                let xpForNextLevel = getXPForLevel(player.level + 1);
+                let xpNeededForNext = getXPNeededForNextLevel(player.level);
 
-                while (player.xp >= xpForNextLevel) {
+                while (player.xp >= xpNeededForNext) {
+                    player.xp -= xpNeededForNext;
                     player.level++;
                     leveledUp = true;
-                    xpForNextLevel = getXPForLevel(player.level + 1);
+                    xpNeededForNext = getXPNeededForNextLevel(player.level);
                 }
                 
                 updateUI();
@@ -305,35 +520,32 @@
                 
                 if (leveledUp) {
                     triggerLevelUpAnimation();
+                    createConfetti(30);
+                    if (player.level % 3 === 0) {
+                        showBadgeNotification();
+                    }
                 }
-
-                actionHistory.push(amount);
+                
                 showUndoButton();
             }
 
             function undoLastAction() {
                 if (actionHistory.length > 0) {
-                    const lastActionXP = actionHistory.pop();
-                    player.xp -= lastActionXP;
+                    const lastAction = actionHistory.pop();
+                    player.level = lastAction.level;
+                    player.xp = lastAction.xp;
                     
-                    let xpForCurrentLevel = getXPForLevel(player.level);
-                    while (player.xp < xpForCurrentLevel && player.level > 1) {
-                        player.level--;
-                        xpForCurrentLevel = getXPForLevel(player.level);
-                    }
-
                     updateUI();
                     saveData();
+                    
                     if (actionHistory.length === 0) {
                         hideUndoButton();
-                    } else {
-                        showUndoButton();
                     }
                 }
             }
 
             function resetProgress() {
-                if (confirm("Êtes-vous sûr de vouloir réinitialiser votre progression ? Cette action est irréversible.")) {
+                if (confirm("Êtes-vous sûr de vouloir réinitialiser votre progression ? Toutes vos données seront perdues.")) {
                     localStorage.removeItem('xpSocialData');
                     localStorage.removeItem('xpSocialHistory');
                     player.level = 1;
@@ -341,7 +553,6 @@
                     actionHistory = [];
                     updateUI();
                     hideUndoButton();
-                    alert("Votre progression a été réinitialisée.");
                 }
             }
 
@@ -358,17 +569,18 @@
             }
 
             function updateUI() {
-                const xpForCurrentLevel = getXPForLevel(player.level);
-                const xpForNextLevel = getXPForLevel(player.level + 1);
+                const xpNeededForNext = getXPNeededForNextLevel(player.level);
                 
-                const xpInCurrentLevel = player.xp - xpForCurrentLevel;
-                const xpNeededForNext = xpForNextLevel - xpForCurrentLevel;
-                
-                const progressPercentage = (xpInCurrentLevel / xpNeededForNext) * 100;
+                const progressPercentage = (player.xp / xpNeededForNext) * 100;
+                const circumference = 2 * Math.PI * 28;
+                const offset = circumference * (1 - progressPercentage / 100);
                 
                 levelNumberEl.textContent = player.level;
                 xpBarEl.style.width = `${Math.min(progressPercentage, 100)}%`;
-                xpTextEl.textContent = `${xpInCurrentLevel.toLocaleString()} / ${xpNeededForNext.toLocaleString()} XP`;
+                progressFillEl.style.strokeDashoffset = offset;
+                
+                currentXpEl.textContent = `${player.xp.toLocaleString()} XP`;
+                nextLevelXpEl.textContent = `${xpNeededForNext.toLocaleString()} XP`;
             }
 
             function saveData() {
@@ -384,6 +596,9 @@
                 const savedHistory = localStorage.getItem('xpSocialHistory');
                 if (savedHistory) {
                     actionHistory = JSON.parse(savedHistory);
+                    if (actionHistory.length > 0) {
+                        showUndoButton();
+                    }
                 }
             }
             
@@ -396,10 +611,60 @@
             }
             
             function triggerLevelUpAnimation() {
-                levelNumberEl.classList.add('level-up-animation');
+                levelNumberEl.classList.add('level-up');
                 setTimeout(() => {
-                    levelNumberEl.classList.remove('level-up-animation');
+                    levelNumberEl.classList.remove('level-up');
                 }, 500);
+            }
+
+            function createConfetti(count) {
+                for (let i = 0; i < count; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    
+                    const colors = ['#0069F6', '#8B5CF6', '#10B981', '#F59E0B', '#EC4899'];
+                    const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.background = randomColor;
+                    
+                    const shapes = ['square', 'rectangle', 'circle'];
+                    const randomShape = shapes[Math.floor(Math.random() * shapes.length)];
+                    
+                    if (randomShape === 'square') {
+                        confetti.style.width = '14px';
+                        confetti.style.height = '14px';
+                    } else if (randomShape === 'rectangle') {
+                        confetti.style.width = '18px';
+                        confetti.style.height = '10px';
+                    } else if (randomShape === 'circle') {
+                        confetti.style.width = '14px';
+                        confetti.style.height = '14px';
+                        confetti.style.borderRadius = '50%';
+                    }
+                    
+                    const startX = Math.random() * window.innerWidth;
+                    confetti.style.left = `${startX}px`;
+                    confetti.style.top = '-20px';
+                    
+                    const duration = 2 + Math.random() * 1;
+                    const delay = Math.random() * 0.5;
+                    confetti.style.animationDuration = `${duration}s`;
+                    confetti.style.animationDelay = `${delay}s`;
+                    
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, (duration + delay) * 1000);
+                }
+            }
+
+            function showBadgeNotification() {
+                badgeNotification.querySelector('span:last-child').textContent = `Niveau ${player.level} atteint !`;
+                badgeNotification.classList.add('show');
+                
+                setTimeout(() => {
+                    badgeNotification.classList.remove('show');
+                }, 3000);
             }
 
             function generateActionButtons() {
@@ -410,8 +675,11 @@
                     button.dataset.xp = action.xp;
                     
                     button.innerHTML = `
-                        <span class="btn-text">${action.emoji} ${action.name}</span>
-                        <span class="btn-xp">+${action.xp} XP</span>
+                        <div class="btn-content">
+                            <span class="btn-emoji">${action.emoji}</span>
+                            <span>${action.name}</span>
+                        </div>
+                        <span class="btn-xp">+${action.xp}</span>
                     `;
                     
                     button.addEventListener('click', () => {
@@ -422,87 +690,18 @@
                 });
             }
 
-            // --- ÉVÉNEMENTS ---
+            // Event listeners
             undoBtn.addEventListener('click', undoLastAction);
             resetBtn.addEventListener('click', resetProgress);
 
-
-            // --- INITIALISATION DE L'APPLICATION ---
+            // Initialize
             loadData();
             generateActionButtons();
             updateUI();
+            
+            const circumference = 2 * Math.PI * 28;
+            progressFillEl.style.strokeDasharray = circumference;
         });
-
-        // --- PWA & OFFLINE SUPPORT ---
-        const manifest = {
-            "name": "XP Social",
-            "short_name": "XP Social",
-            "start_url": ".",
-            "display": "standalone",
-            "background_color": "#1a1a2e",
-            "theme_color": "#16213e",
-            "description": "Gamifiez votre vie sociale et suivez vos progrès.",
-            "icons": [{
-                "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMmEyYzNjIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMjA2LjUgNDEybDMwLjUtOTIgNDUuMi03NC41aDMxbC0zMS40IDUxLjYgMjIgOTQuOWgtMzMuM2wtMTQuMi02MS0xNC40IDYxek0zMDkuNyA0MTJWMTk4LjNoMzIuOXY1Ny4yaDQ3LjJ2MzAuOWgtNDcuMnY1OC4yYzAgMTIuNSA0IDI4LjQgMTYgMjguNGg4LjV2MzAuM3oiLz48L3N2Zz4=",
-                "sizes": "192x192",
-                "type": "image/svg+xml"
-            }, {
-                "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMmEyYzNjIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMjA2LjUgNDEybDMwLjUtOTIgNDUuMi03NC41aDMxbC0zMS40IDUxLjYgMjIgOTQuOWgtMzMuM2wtMTQuMi02MS0xNC40IDYxek0zMDkuNyA0MTJWMTk4LjNoMzIuOXY1Ty4yIGg0Ny4ydjMwLjloLTQ3LjJ2NTguMmMwIDEyLjUgNCAyOC40IDE2IDI4LjRoOC41djMwLjN6Ii8+PC9zdmc+",
-                "sizes": "512x512",
-                "type": "image/svg+xml"
-            }]
-        };
-        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        document.querySelector('#manifest').setAttribute('href', manifestURL);
-
-        if ('serviceWorker' in navigator) {
-            const swContent = `
-                const CACHE_NAME = 'xp-social-cache-v1';
-                const URLS_TO_CACHE = [
-                    './XPSocial.html',
-                    'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap',
-                    'https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2'
-                ];
-
-                self.addEventListener('install', event => {
-                    event.waitUntil(
-                        caches.open(CACHE_NAME)
-                            .then(cache => cache.addAll(URLS_TO_CACHE))
-                    );
-                });
-
-                self.addEventListener('fetch', event => {
-                    event.respondWith(
-                        caches.match(event.request)
-                            .then(response => response || fetch(event.request))
-                    );
-                });
-
-                self.addEventListener('activate', event => {
-                  var cacheWhitelist = [CACHE_NAME];
-                  event.waitUntil(
-                    caches.keys().then(cacheNames => {
-                      return Promise.all(
-                        cacheNames.map(cacheName => {
-                          if (cacheWhitelist.indexOf(cacheName) === -1) {
-                            return caches.delete(cacheName);
-                          }
-                        })
-                      );
-                    })
-                  );
-                });
-            `;
-            const swBlob = new Blob([swContent], { type: 'application/javascript' });
-            const swURL = URL.createObjectURL(swBlob);
-
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register(swURL)
-                    .then(reg => console.log('ServiceWorker registration successful.'))
-                    .catch(err => console.log('ServiceWorker registration failed: ', err));
-            });
-        }
     </script>
 </body>
 </html>
