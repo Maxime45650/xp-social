@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>XP Social</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="XP Social">
+    
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzI5MmYzcCIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0zMS4xIDY4LjRMMzYgNTQuN2wtNi44LTExLjJoNC42bDQuNiA4IDQuNS04aDQuN2wtNi44IDExLjEgNC44IDEzLjdoLTQuOWwtMy4yLTguOS0zLjEgOC45ek01My4zIDY4LjVWNDEuN2g0Ljl2OC42aDcuMXY0LjZoLTcuMXY4LjdjMCAxLjkuNiAyLjggMi40IDIuOGgxLjN2NC41eiIvPjwvc3ZnPg==">
+
+    <link rel="manifest" id="manifest">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --bg-color: #1a1a2e;
+            --card-color: #16213e;
+            --primary-color: #0f3460;
+            --accent-color: #e94560;
+            --text-color: #e0e0e0;
+            --xp-color: #32de84;
+            --level-up-color: #ffcc00;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background-color: var(--card-color);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        header h1 {
+            color: var(--accent-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        .stats-display {
+            background: var(--primary-color);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .level-display {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .level-display .level-number {
+            display: inline-block;
+            font-size: 3.5em;
+            font-weight: 700;
+            color: var(--level-up-color);
+            transform: scale(1);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .level-number.level-up-animation {
+            transform: scale(1.5);
+        }
+        
+        .xp-bar-container {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .xp-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--xp-color), #85ffbd);
+            border-radius: 10px;
+            transition: width 0.5s ease-out;
+        }
+
+        .xp-text {
+            font-size: 0.9em;
+            font-weight: 400;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .action-btn {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 10px;
+            font-size: 1em;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+            background-color: var(--accent-color);
+        }
+
+        .action-btn .btn-text {
+            display: block;
+        }
+        .action-btn .btn-xp {
+            font-size: 0.8em;
+            font-weight: 400;
+            color: var(--xp-color);
+        }
+
+        .xp-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            background-color: rgba(50, 222, 132, 0.9);
+            color: white;
+            border-radius: 10px;
+            font-size: 1.5em;
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.5s ease-out;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .xp-popup.show {
+            opacity: 1;
+            transform: translate(-50%, -150%);
+        }
+
+        .instructions {
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #aaa;
+            line-height: 1.4;
+        }
+        .instructions strong {
+            color: #ddd;
+        }
+        
+        /* Style pour le bouton d'annulation */
+        #undoBtn {
+            margin-top: 10px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 0.9em;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s ease-in-out;
+            visibility: hidden; /* Caché par défaut */
+            height: 0;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        #undoBtn.show {
+            opacity: 0.8;
+            visibility: visible;
+            height: auto;
+            padding: 5px 10px;
+        }
+
+        #undoBtn:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>XP Social 🚀</h1>
+        </header>
+
+        <section class="stats-display">
+            <div class="level-display">
+                NIVEAU
+                <span id="levelNumber" class="level-number">1</span>
+            </div>
+            <div class="xp-bar-container">
+                <div id="xpBar" class="xp-bar"></div>
+            </div>
+            <div id="xpText" class="xp-text">0 / 100 XP</div>
+        </section>
+
+        <main id="actionsGrid" class="actions-grid">
+        </main>
+        
+        <button id="undoBtn">Annuler la dernière action</button>
+
+        <div class="instructions">
+            <strong>Conseil :</strong> Pour une expérience optimale, ajoutez cette page à votre écran d'accueil via le menu Partager de Safari !
+        </div>
+    </div>
+
+    <div id="xpPopup" class="xp-popup"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONFIGURATION FACILE ---
+            const socialActions = [
+                { id: 'dareApproach', name: 'Oser aller voir quelqu’un', xp: 20, emoji: '🏃‍♂️' },
+                { id: 'smallInteraction', name: 'Petite interaction sociale', xp: 30, emoji: '💬' },
+                { id: 'bigChallenge', name: 'Gros challenge social', xp: 50, emoji: '🗣️' }
+            ];
+
+            const XP_BASE = 100;
+            const XP_FACTOR = 1.5;
+
+            // --- ÉLÉMENTS DU DOM ---
+            const levelNumberEl = document.getElementById('levelNumber');
+            const xpBarEl = document.getElementById('xpBar');
+            const xpTextEl = document.getElementById('xpText');
+            const actionsGridEl = document.getElementById('actionsGrid');
+            const xpPopupEl = document.getElementById('xpPopup');
+            const undoBtn = document.getElementById('undoBtn');
+
+            // --- ÉTAT DE L'APPLICATION ---
+            let player = {
+                level: 1,
+                xp: 0
+            };
+            let lastActionXP = 0; // Ajout d'une variable pour stocker la dernière XP ajoutée
+            let undoTimeout;
+
+            // --- FONCTIONS PRINCIPALES ---
+            function getXPForLevel(level) {
+                if (level <= 1) return 0;
+                return Math.floor(XP_BASE * (Math.pow(XP_FACTOR, level - 1) - 1) / (XP_FACTOR - 1));
+            }
+            
+            function grantXP(amount) {
+                player.xp += amount;
+                
+                let leveledUp = false;
+                let xpForNextLevel = getXPForLevel(player.level + 1);
+
+                while (player.xp >= xpForNextLevel) {
+                    player.level++;
+                    leveledUp = true;
+                    xpForNextLevel = getXPForLevel(player.level + 1);
+                }
+                
+                updateUI();
+                saveData();
+                showXPPopup(amount);
+                
+                if (leveledUp) {
+                    triggerLevelUpAnimation();
+                }
+
+                // Activation du bouton d'annulation
+                lastActionXP = amount;
+                showUndoButton();
+            }
+
+            function undoLastAction() {
+                if (lastActionXP !== 0) {
+                    player.xp -= lastActionXP;
+                    
+                    // Gérer le retour de niveau si nécessaire
+                    let xpForCurrentLevel = getXPForLevel(player.level);
+                    while (player.xp < xpForCurrentLevel && player.level > 1) {
+                        player.level--;
+                        xpForCurrentLevel = getXPForLevel(player.level);
+                    }
+
+                    updateUI();
+                    saveData();
+                    hideUndoButton();
+                    lastActionXP = 0;
+                }
+            }
+
+            function showUndoButton() {
+                undoBtn.classList.add('show');
+                clearTimeout(undoTimeout);
+                undoTimeout = setTimeout(() => {
+                    hideUndoButton();
+                }, 5000); // Le bouton disparaît après 5 secondes
+            }
+
+            function hideUndoButton() {
+                undoBtn.classList.remove('show');
+            }
+
+            function updateUI() {
+                const xpForCurrentLevel = getXPForLevel(player.level);
+                const xpForNextLevel = getXPForLevel(player.level + 1);
+                
+                const xpInCurrentLevel = player.xp - xpForCurrentLevel;
+                const xpNeededForNext = xpForNextLevel - xpForCurrentLevel;
+                
+                const progressPercentage = (xpInCurrentLevel / xpNeededForNext) * 100;
+                
+                levelNumberEl.textContent = player.level;
+                xpBarEl.style.width = `${Math.min(progressPercentage, 100)}%`;
+                xpTextEl.textContent = `${xpInCurrentLevel.toLocaleString()} / ${xpNeededForNext.toLocaleString()} XP`;
+            }
+
+            function saveData() {
+                localStorage.setItem('xpSocialData', JSON.stringify(player));
+            }
+
+            function loadData() {
+                const savedData = localStorage.getItem('xpSocialData');
+                if (savedData) {
+                    player = JSON.parse(savedData);
+                }
+            }
+            
+            function showXPPopup(amount) {
+                xpPopupEl.textContent = `+${amount} XP`;
+                xpPopupEl.classList.add('show');
+                setTimeout(() => {
+                    xpPopupEl.classList.remove('show');
+                }, 1500);
+            }
+            
+            function triggerLevelUpAnimation() {
+                levelNumberEl.classList.add('level-up-animation');
+                setTimeout(() => {
+                    levelNumberEl.classList.remove('level-up-animation');
+                }, 500);
+            }
+
+            function generateActionButtons() {
+                actionsGridEl.innerHTML = '';
+                socialActions.forEach(action => {
+                    const button = document.createElement('button');
+                    button.className = 'action-btn';
+                    button.dataset.xp = action.xp;
+                    
+                    button.innerHTML = `
+                        <span class="btn-text">${action.emoji} ${action.name}</span>
+                        <span class="btn-xp">+${action.xp} XP</span>
+                    `;
+                    
+                    button.addEventListener('click', () => {
+                        grantXP(action.xp);
+                    });
+                    
+                    actionsGridEl.appendChild(button);
+                });
+            }
+
+            // --- ÉVÉNEMENTS ---
+            undoBtn.addEventListener('click', undoLastAction);
+
+
+            // --- INITIALISATION DE L'APPLICATION ---
+            loadData();
+            generateActionButtons();
+            updateUI();
+        });
+
+        // --- PWA & OFFLINE SUPPORT ---
+        const manifest = {
+            "name": "XP Social",
+            "short_name": "XP Social",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#1a1a2e",
+            "theme_color": "#16213e",
+            "description": "Gamifiez votre vie sociale et suivez vos progrès.",
+            "icons": [{
+                "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMmEyYzNjIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMjA2LjUgNDEybDMwLjUtOTIgNDUuMi03NC41aDMxbC0zMS40IDUxLjYgMjIgOTQuOWgtMzMuM2wtMTQuMi02MS0xNC40IDYxek0zMDkuNyA0MTJWMTk4LjNoMzIuOXY1Ny4yaDQ3LjJ2MzAuOWgtNDcuMnY1OC4yYzAgMTIuNSA0IDI4LjQgMTYgMjguNGg4LjV2MzAuM3oiLz48L3N2Zz4=",
+                "sizes": "192x192",
+                "type": "image/svg+xml"
+            }, {
+                "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjMmEyYzNjIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMjA2LjUgNDEybDMwLjUtOTIgNDUuMi03NC41aDMxbC0zMS40IDUxLjYgMjIgOTQuOWgtMzMuM2wtMTQuMi02MS0xNC40IDYxek0zMDkuNyA0MTJWMTk4LjNoMzIuOXY1Ty4yIGg0Ny4ydjMwLjloLTQ3LjJ2NTguMmMwIDEyLjUgNCAyOC40IDE2IDI4LjRoOC41djMwLjN6Ii8+PC9zdmc+",
+                "sizes": "512x512",
+                "type": "image/svg+xml"
+            }]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        document.querySelector('#manifest').setAttribute('href', manifestURL);
+
+        if ('serviceWorker' in navigator) {
+            const swContent = `
+                const CACHE_NAME = 'xp-social-cache-v1';
+                const URLS_TO_CACHE = [
+                    './XPSocial.html',
+                    'https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap',
+                    'https://fonts.gstatic.com/s/poppins/v20/pxiByp8kv8JHgFVrLGT9Z1xlFQ.woff2'
+                ];
+
+                self.addEventListener('install', event => {
+                    event.waitUntil(
+                        caches.open(CACHE_NAME)
+                            .then(cache => cache.addAll(URLS_TO_CACHE))
+                    );
+                });
+
+                self.addEventListener('fetch', event => {
+                    event.respondWith(
+                        caches.match(event.request)
+                            .then(response => response || fetch(event.request))
+                    );
+                });
+
+                self.addEventListener('activate', event => {
+                  var cacheWhitelist = [CACHE_NAME];
+                  event.waitUntil(
+                    caches.keys().then(cacheNames => {
+                      return Promise.all(
+                        cacheNames.map(cacheName => {
+                          if (cacheWhitelist.indexOf(cacheName) === -1) {
+                            return caches.delete(cacheName);
+                          }
+                        })
+                      );
+                    })
+                  );
+                });
+            `;
+            const swBlob = new Blob([swContent], { type: 'application/javascript' });
+            const swURL = URL.createObjectURL(swBlob);
+
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register(swURL)
+                    .then(reg => console.log('ServiceWorker registration successful.'))
+                    .catch(err => console.log('ServiceWorker registration failed: ', err));
+            });
+        }
+    </script>
+</body>
+</html>
