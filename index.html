@@ -9,13 +9,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="XP Social">
     
-    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzAwNjlGNiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0zMS4xIDY4LjRMMzYgNTQuN2wtNi44LTExLjJoNC42bDQuNiA4IDQuNS04aDQuN3wtNi44IDExLjEgNC44IDEzLjdoLTQuOWwtMy4yLTguOS0zLjEgOC45ek01My4zIDY4LjVWNDEuN2g0Ljl2OC44aDcuMXY0LjZoLTcuMXY4LjdjMCAxLjkuNiAyLjggMi40IDIuOGgxLjN2NC41eiIvPjwvc3ZnPg==">
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzAwNjlGNiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0zMS4xIDY4LjRMMzYgNTQuN2wtNi44LTExLjJoNC42bDQuNiA4IDQuNS04aDQuN3wtNi44IDExLjEgNC44IDEzLjdoLTQuOWwtMy4yLTguOS0zLjEgOC45ek01My4zIDY4LjVWNDEuN2g0Ljl2OC42aDcuMXY0LjZoLTcuMXY4LjdjMCAxLjkuNiAyLjggMi40IDIuOGgxLjN2NC41eiIvPjwvc3ZnPg==">
     <link rel="manifest" id="manifest">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #0069F6;
             --primary-light: #E6F0FF;
+            --secondary: #10B981;
             --accent: #8B5CF6;
             --ddr-primary: #FF416C;
             --ddr-secondary: #FF4B2B;
@@ -26,16 +27,16 @@
             --success: #22C55E;
             --warning: #F59E0B;
             --bg-color: #F1F5F9;
-         }
- 
-         * {
+        }
+
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-tap-highlight-color: transparent;
-         }
- 
+        }
+
         body {
             background: var(--bg-color);
             color: var(--neutral-dark);
@@ -45,8 +46,8 @@
             align-items: center;
             padding: 20px;
             overflow-x: hidden;
-         }
- 
+        }
+
         .container {
             width: 100%;
             max-width: 440px;
@@ -57,200 +58,836 @@
             position: relative;
             overflow: hidden;
             border: 1px solid var(--neutral-border);
-         }
-         
-        @media (max-width: 500px) { .container { padding: 20px; } }
- 
+        }
+        
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+        }
+
         header {
             text-align: center;
             margin-bottom: 24px;
             position: relative;
-         }
- 
+        }
+
         header h1 {
             font-size: 28px;
             font-weight: 800;
             color: var(--primary);
+            letter-spacing: -0.5px;
             font-family: 'Fredoka One', cursive;
             text-shadow: 2px 2px 0px rgba(0, 105, 246, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
             margin-bottom: 4px;
-         }
- 
-        header p { color: #64748B; font-size: 14px; }
- 
-        .menu-btn {
-            position: absolute; top: 0; right: 0; background: var(--neutral-light);
-            border: 1px solid var(--neutral-border); border-radius: 12px; width: 40px;
-            height: 40px; display: flex; justify-content: center; align-items: center;
-            font-size: 20px; cursor: pointer; transition: background 0.2s;
         }
- 
+
+        header p {
+            color: #64748B;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .menu-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--neutral-light);
+            border: 1px solid var(--neutral-border);
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            cursor: pointer;
+            transition: background 0.2s;
+            line-height: 0;
+            padding: 0;
+        }
+
+        .menu-btn:hover {
+            background: #EBEFF5;
+        }
+
+        .menu-btn:active {
+            background: #DCE3ED;
+            transform: scale(0.98);
+        }
+
         .stats-display {
-            background: var(--white); border-radius: 20px; padding: 20px;
-            margin-bottom: 24px; border: 1px solid var(--neutral-border);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); text-align: center;
-         }
+            background: var(--white);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--neutral-border);
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            text-align: center;
+        }
 
         .progress-ring {
-            position: relative; width: 100px; height: 100px; margin: 0 auto 12px;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 12px;
         }
-        .progress-bg { fill: none; stroke: var(--neutral-border); stroke-width: 8; }
+
+        .progress-bg {
+            fill: none;
+            stroke: var(--neutral-border);
+            stroke-width: 8;
+        }
+
         .progress-fill {
-            fill: none; stroke: url(#gradient); stroke-width: 8; stroke-linecap: round;
-            transform: rotate(-90deg); transform-origin: 50% 50%;
+            fill: none;
+            stroke: url(#gradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
             transition: stroke-dashoffset 0.7s ease-in-out;
         }
+        
         .level-inside {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 32px; font-weight: 800; color: var(--primary);
-            font-family: 'Poppins', sans-serif; transition: transform 0.3s ease-in-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.3s ease-in-out;
         }
-        .level-inside.level-up { animation: levelUpBounce 0.5s ease-out; }
+
+        .level-inside.level-up {
+            animation: levelUpBounce 0.5s ease-out;
+        }
+
         @keyframes levelUpBounce {
             0% { transform: translate(-50%, -50%) scale(1); }
             50% { transform: translate(-50%, -50%) scale(1.3); }
             100% { transform: translate(-50%, -50%) scale(1); }
         }
-        
+
+        /* Barre de progression classique */
+        .xp-progress {
+            margin-bottom: 16px;
+        }
+
+        .xp-bar-container {
+            background: var(--neutral-border);
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .xp-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 10px;
+            transition: width 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .xp-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: xpShine 1.5s infinite;
+        }
+
+        @keyframes xpShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
         .xp-text {
-            display: flex; justify-content: space-between; font-size: 12px;
-            font-weight: 500; color: #64748B; padding: 0 10px;
-         }
-         
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 500;
+            color: #64748B;
+            padding: 0 10px;
+        }
+        
         .xp-summary {
-            display: grid; grid-template-columns: repeat(3, 1fr); text-align: center;
-            margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--neutral-border);
-         }
-         
-        .xp-summary-item h4 { font-size: 20px; font-weight: 700; color: var(--neutral-dark); }
-        .xp-summary-item p { font-size: 11px; font-weight: 500; text-transform: uppercase; color: #64748B; }
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--neutral-border);
+        }
+        
+        .xp-summary-item h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--neutral-dark);
+        }
+        
+        .xp-summary-item p {
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            color: #64748B;
+        }
+        
         .xp-summary-item.streak h4,
-        .xp-summary-item.streak p { color: var(--warning); }
+        .xp-summary-item.streak p {
+            color: var(--warning);
+        }
+        
         .xp-summary-item.abordages h4,
-        .xp-summary-item.abordages p { color: var(--primary); }
+        .xp-summary-item.abordages p {
+            color: var(--primary);
+        }
 
         .mode-switcher {
-            display: flex; background-color: var(--neutral-light); border-radius: 12px;
-            padding: 4px; margin-bottom: 24px; border: 1px solid var(--neutral-border);
+            display: flex;
+            background-color: var(--neutral-light);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 24px;
+            border: 1px solid var(--neutral-border);
         }
+
         .mode-btn {
-            flex: 1; padding: 10px; border: none; background-color: transparent; border-radius: 8px;
-            font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; color: #64748B;
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background-color: transparent;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748B;
+            user-select: none;
         }
-        .mode-btn.active { background-color: var(--white); color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
 
-        .mode-container { display: none; }
-        .mode-container.active { display: block; }
+        .mode-btn.active {
+            background-color: var(--white);
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+
+        .mode-btn:active {
+            background-color: var(--primary-light);
+            transform: scale(0.98);
+        }
+
+        .mode-container {
+            display: none;
+        }
+
+        .mode-container.active {
+            display: block;
+        }
          
-        .intro-text { font-size: 14px; font-weight: 500; color: #4B5563; margin-bottom: 16px; text-align: center; }
-        #ddrModeContainer { text-align: center; }
-        #newInteractionBtn {
-            font-size: 20px; font-weight: 700; font-family: 'Poppins', sans-serif; color: var(--white);
-            background: linear-gradient(45deg, var(--ddr-primary), var(--ddr-secondary));
-            border: none; border-radius: 16px; padding: 20px 40px; cursor: pointer;
-            box-shadow: 0 8px 25px rgba(255, 65, 108, 0.4); transition: all 0.3s ease;
-            animation: pulse 2s infinite;
+        .intro-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: #4B5563;
+            margin-bottom: 16px;
+            text-align: center;
         }
-        #newInteractionBtn:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255, 65, 108, 0.5); }
-        #newInteractionBtn:active { transform: translateY(0); }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-        .actions-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        #ddrModeContainer {
+            text-align: center;
+        }
+
+        #newInteractionBtn {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            color: var(--white);
+            background: linear-gradient(45deg, var(--ddr-primary), var(--ddr-secondary));
+            border: none;
+            border-radius: 16px;
+            padding: 20px 40px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 65, 108, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+            user-select: none;
+        }
+
+        #newInteractionBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 65, 108, 0.5);
+        }
+
+        #newInteractionBtn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(255, 65, 108, 0.3);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
         .action-btn {
-            background: var(--white); border: 1px solid var(--neutral-border); border-radius: 12px; padding: 16px;
-            color: var(--neutral-dark); font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;
-            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-         }
-        .action-btn:hover { border-color: var(--primary-light); box-shadow: 0 6px 15px rgba(0, 105, 246, 0.12); transform: translateY(-2px); }
-        .btn-content { display: flex; align-items: center; gap: 12px; }
-        .btn-emoji { font-size: 24px; }
-        .btn-xp { background: var(--primary-light); color: var(--primary); padding: 4px 10px; border-radius: 16px; font-size: 13px; font-weight: 600; }
+            background: var(--white);
+            border: 1px solid var(--neutral-border);
+            border-radius: 12px;
+            padding: 16px;
+            color: var(--neutral-dark);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
 
-        .divider { width: 100%; height: 1px; background-color: var(--neutral-border); margin: 24px 0; }
-        #undoBtn {
-            width: 100%; background: transparent; border: 1px solid var(--neutral-border); border-radius: 10px;
-            padding: 12px; color: #64748B; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s ease;
-         }
-        #undoBtn:hover { background: var(--neutral-light); }
+        .action-btn:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 6px 15px rgba(0, 105, 246, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .action-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 105, 246, 0.05);
+            background: var(--neutral-light);
+        }
         
+        .action-btn.full-width {
+            width: 100%;
+        }
+
+        .btn-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-emoji {
+            font-size: 24px;
+        }
+
+        .btn-xp {
+            background: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .daily-challenge {
+            border: 1px solid #8B5CF6;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            background: #F1F5F9;
+        }
+        
+        .daily-challenge h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #8B5CF6;
+        }
+        
+        .daily-challenge p {
+            font-size: 14px;
+        }
+        
+        .daily-challenge-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            background-color: #8B5CF6;
+            border: none;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        
+        .daily-challenge-btn:hover:not(:disabled) {
+            background-color: #6d42c3;
+        }
+        
+        .daily-challenge-btn:disabled {
+            background-color: #a7a2b0;
+            cursor: not-allowed;
+        }
+
+        .daily-challenge-btn:active:not(:disabled) {
+            background-color: #5a36a3;
+            transform: scale(0.98);
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: var(--neutral-border);
+            margin: 24px 0;
+        }
+
+        #undoBtn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--neutral-border);
+            border-radius: 10px;
+            padding: 12px;
+            color: #64748B;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+        
+        #undoBtn:hover {
+            background: var(--neutral-light);
+            border-color: var(--neutral-border);
+        }
+
+        #undoBtn:active {
+            background: #DCE3ED;
+            transform: scale(0.98);
+        }
+
+        .instructions {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #94A3B8;
+            text-align: center;
+            line-height: 1.5;
+            padding: 12px;
+            background: var(--neutral-light);
+            border-radius: 10px;
+        }
+
         /* --- MODALS --- */
         .modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);
-            display: flex; justify-content: center; align-items: center; z-index: 1000;
-            visibility: hidden; opacity: 0; transition: visibility 0s 0.3s, opacity 0.3s;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s;
         }
-        .modal.visible { visibility: visible; opacity: 1; transition: visibility 0s, opacity 0.3s; }
-        .modal-content {
-            background: var(--white); padding: 24px; border-radius: 16px; width: 90%; max-width: 400px;
-            position: relative; max-height: 90vh; overflow-y: auto;
-            transform: scale(0.95); transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-        }
-        .modal.visible .modal-content { transform: scale(1); }
-        .close-btn {
-            position: absolute; top: 12px; right: 12px; font-size: 20px; font-weight: bold; color: #64748B;
-            cursor: pointer; width: 28px; height: 28px; display: flex; justify-content: center;
-            align-items: center; background-color: var(--neutral-light); border-radius: 50%;
-        }
-        .modal-content h2 { font-family: 'Poppins', sans-serif; font-size: 20px; margin-bottom: 20px; color: var(--primary); }
-        
-        .ddr-step { margin-bottom: 24px; }
-        .ddr-step h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; color: var(--neutral-dark); }
-        .girl-types { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .girl-type {
-            border: 2px solid var(--neutral-border); border-radius: 12px; padding: 12px;
-            text-align: center; cursor: pointer; transition: all 0.2s ease;
-        }
-        .girl-type .emoji { font-size: 28px; }
-        .girl-type span { font-size: 13px; font-weight: 500; color: #4b5563; display: block; margin-top: 4px; }
-        .girl-type p { font-size: 12px; font-weight: 600; margin-top: 2px; color: var(--primary); }
-        .girl-type input { display: none; }
-        .girl-type.selected { border-color: var(--ddr-primary); background-color: #fce8f2; transform: scale(1.05); }
 
-        .ddr-actions-list { display: flex; flex-direction: column; gap: 10px; }
-        .action-checkbox-label {
-            display: flex; align-items: center; background-color: var(--neutral-light); padding: 12px;
-            border-radius: 10px; cursor: pointer; border: 1px solid var(--neutral-border); transition: all 0.2s ease;
+        .modal.visible {
+            visibility: visible;
+            opacity: 1;
+            transition: visibility 0s, opacity 0.3s;
         }
-        .action-checkbox-label .content {
-            flex-grow: 1; display: flex; align-items: center; gap: 10px;
-            font-weight: 500; min-width: 0; /* Fix for long text bug */
-        }
-        .action-checkbox-label .content span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .action-checkbox-label .xp-tag {
-            background: var(--white); color: var(--primary); padding: 4px 8px; border-radius: 8px;
-            font-size: 12px; font-weight: 600; border: 1px solid var(--neutral-border); flex-shrink: 0;
-        }
-        .action-checkbox-label input { display: none; }
-        .action-checkbox-label input:checked + .custom-checkbox { background-color: var(--ddr-primary); border-color: var(--ddr-primary); color: white; }
-        .action-checkbox-label input:checked + .custom-checkbox::after { opacity: 1; }
-        .custom-checkbox {
-            width: 22px; height: 22px; border: 2px solid #cbd5e1; border-radius: 6px;
-            display: flex; justify-content: center; align-items: center;
-            transition: all 0.2s; margin-right: 12px; flex-shrink: 0;
-        }
-        .custom-checkbox::after { content: '✔'; font-size: 14px; opacity: 0; transition: opacity 0.2s; }
-        #ddrSubmitBtn {
-            width: 100%; padding: 16px; font-size: 16px; font-weight: 700; color: var(--white);
-            border: none; border-radius: 12px; cursor: pointer;
-            background: linear-gradient(45deg, var(--ddr-primary), var(--ddr-secondary));
+
+        .modal-content {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
         
+        .modal.visible .modal-content {
+            transform: scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #64748B;
+            cursor: pointer;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--neutral-light);
+            border-radius: 50%;
+        }
+
+        .close-btn:active {
+            transform: scale(0.98);
+        }
+
+        .modal-content h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        
+        /* DDR Modal Styles */
+        .ddr-step {
+            margin-bottom: 24px;
+        }
+        
+        .ddr-step h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--neutral-dark);
+        }
+        
+        .girl-types {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .girl-type {
+            border: 2px solid var(--neutral-border);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .girl-type .emoji {
+            font-size: 28px;
+        }
+        
+        .girl-type span {
+            font-size: 13px;
+            font-weight: 500;
+            color: #4b5563;
+            display: block;
+            margin-top: 4px;
+        }
+        
+        .girl-type p {
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 2px;
+            color: var(--primary);
+        }
+        
+        .girl-type input {
+            display: none;
+        }
+        
+        .girl-type.selected {
+            border-color: var(--ddr-primary);
+            background-color: #fce8f2;
+            transform: scale(1.05);
+        }
+
+        .girl-type:active {
+            transform: scale(0.98);
+        }
+        
+        .ddr-actions-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .action-checkbox-label {
+            display: flex;
+            align-items: center;
+            background-color: var(--neutral-light);
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid var(--neutral-border);
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+        
+        .action-checkbox-label .content {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            min-width: 0;
+        }
+        
+        .action-checkbox-label .content span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .action-checkbox-label .xp-tag {
+            background: var(--white);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid var(--neutral-border);
+            flex-shrink: 0;
+        }
+        
+        .action-checkbox-label input {
+            display: none;
+        }
+        
+        .action-checkbox-label input:checked + .custom-checkbox {
+            background-color: var(--ddr-primary);
+            border-color: var(--ddr-primary);
+            color: white;
+        }
+        
+        .action-checkbox-label input:checked + .custom-checkbox::after {
+            opacity: 1;
+        }
+        
+        .custom-checkbox {
+            width: 22px;
+            height: 22px;
+            border: 2px solid #cbd5e1;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .custom-checkbox::after {
+            content: '✔';
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .action-checkbox-label:active {
+            transform: scale(0.98);
+        }
+        
+        #ddrSubmitBtn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            background: linear-gradient(45deg, var(--ddr-primary), var(--ddr-secondary));
+            user-select: none;
+        }
+
+        #ddrSubmitBtn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Badges and Stats Styles */
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 12px;
+            text-align: center;
+        }
+
+        .badge-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            opacity: 0.3;
+            transition: opacity 0.3s ease;
+        }
+
+        .badge-item.unlocked {
+            opacity: 1;
+        }
+
+        .badge-item .emoji {
+            font-size: 36px;
+        }
+
+        .badge-item p {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+        
+        .stats-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .stats-content li {
+            padding: 10px;
+            border-bottom: 1px solid var(--neutral-border);
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .stats-content li:last-child {
+            border-bottom: none;
+        }
+        
+        .export-btn-modal {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            background-color: var(--primary-light);
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+        
+        .export-btn-modal:hover {
+            background-color: #cfdcf4;
+        }
+
+        .export-btn-modal:active {
+            background-color: #b8c7e8;
+            transform: scale(0.98);
+        }
+
         .xp-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 14px 24px;
-            background: var(--success); color: var(--white); border-radius: 14px; font-size: 18px; font-weight: 700;
-            opacity: 0; transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-            pointer-events: none; z-index: 1001; box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 14px 24px;
+            background: var(--success);
+            color: var(--white);
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: 700;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            pointer-events: none;
+            z-index: 1001;
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.35);
         }
-        .xp-popup.show { opacity: 1; transform: translate(-50%, -150%); }
+
+        .xp-popup.show {
+            opacity: 1;
+            transform: translate(-50%, -150%);
+        }
+
         .badge-unlocked-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.8); width: 80%;
-            max-width: 350px; background: linear-gradient(135deg, #1A202C, #2D3748); color: white;
-            border-radius: 16px; padding: 24px; text-align: center; opacity: 0; z-index: 1002;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.5); transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 80%;
+            max-width: 350px;
+            background: linear-gradient(135deg, #1A202C, #2D3748);
+            color: white;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            opacity: 0;
+            z-index: 1002;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
-        .badge-unlocked-popup.show { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-        .badge-unlocked-popup .emoji { font-size: 60px; line-height: 1; margin-bottom: 8px; }
-        .badge-unlocked-popup h3 { font-size: 20px; font-family: 'Poppins', sans-serif; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; color: gold; }
+        
+        .badge-unlocked-popup.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .badge-unlocked-popup .emoji {
+            font-size: 60px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .badge-unlocked-popup h3 {
+            font-size: 20px;
+            font-family: 'Poppins', sans-serif;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: gold;
+        }
+        
+        .badge-unlocked-popup p {
+            font-size: 14px;
+            color: #CBD5E0;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 998;
+            animation: confettiFall 3s linear forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        main {
+            margin-bottom: 24px;
+        }
     </style>
 </head>
 <body>
@@ -275,10 +912,18 @@
                 </svg>
                 <div class="level-inside" id="levelNumber">1</div>
             </div>
-            <div class="xp-text">
-                <span id="currentXP">0 XP</span>
-                <span id="nextLevelXP">100 XP</span>
+            
+            <!-- Barre de progression classique -->
+            <div class="xp-progress">
+                <div class="xp-bar-container">
+                    <div id="xpBar" class="xp-bar"></div>
+                </div>
+                <div class="xp-text">
+                    <span id="currentXP">0 XP</span>
+                    <span id="nextLevelXP">100 XP</span>
+                </div>
             </div>
+            
             <div class="xp-summary">
                 <div class="xp-summary-item abordages"><h4 id="abordageCount">0</h4><p>Abordages</p></div>
                 <div class="xp-summary-item"><h4 id="xpToday">0</h4><p>XP du jour</p></div>
@@ -302,283 +947,747 @@
             </div>
         </main>
         
+        <section id="dailyChallengeSection" class="daily-challenge" style="display:none;">
+            <h3>🎯 Défi du jour</h3>
+            <p id="dailyChallengeDescription"></p>
+            <button id="dailyChallengeBtn" class="daily-challenge-btn"></button>
+        </section>
+        
         <div class="divider"></div>
-        <button id="undoBtn">Annuler la dernière action</button>
+
+        <div class="action-buttons">
+            <button id="undoBtn">Annuler la dernière action</button>
+        </div>
+
+        <div class="instructions">
+            <strong>Conseil :</strong> Ajoutez cette page à votre écran d'accueil pour un accès rapide !
+        </div>
     </div>
 
     <div id="sideMenuModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2>Menu</h2>
-            <div class="actions-grid">
-                <button id="badgesBtn" class="action-btn"><div class="btn-content"><span class="btn-emoji">🏆</span><span>Mes Badges</span></div></button>
-                <button id="statsBtn" class="action-btn"><div class="btn-content"><span class="btn-emoji">📊</span><span>Statistiques</span></div></button>
-                <button id="resetBtn" class="action-btn" style="color: #ef4444; border-color: #fecaca; background: #fee2e2; margin-top: 20px;">Réinitialiser</button>
+            <div class="menu-links">
+                <button id="badgesBtn" class="action-btn full-width">
+                    <div class="btn-content">
+                        <span class="btn-emoji">🏆</span>
+                        <span>Mes Badges</span>
+                    </div>
+                </button>
+                <button id="statsBtn" class="action-btn full-width">
+                    <div class="btn-content">
+                        <span class="btn-emoji">📊</span>
+                        <span>Statistiques</span>
+                    </div>
+                </button>
+                <button id="exportBtn" class="action-btn full-width">
+                    <div class="btn-content">
+                        <span class="btn-emoji">⬇️</span>
+                        <span>Exporter la progression</span>
+                    </div>
+                </button>
+                <button id="shareScoreBtn" class="action-btn full-width">
+                    <div class="btn-content">
+                        <span class="btn-emoji">📲</span>
+                        <span>Partager mon score</span>
+                    </div>
+                </button>
+            </div>
+            <button id="resetBtn" class="action-btn full-width" style="color: #ef4444; border-color: #ef4444; background: #fee2e2; margin-top: 20px;">Réinitialiser la progression</button>
+        </div>
+    </div>
+
+    <div id="badgesModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>🏆 Mes Badges</h2>
+            <div id="badgesGrid" class="badges-grid"></div>
+        </div>
+    </div>
+
+    <div id="statsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>📊 Statistiques</h2>
+            <div id="statsContent" class="stats-content">
+                <h3>Résumé</h3>
+                <ul>
+                    <li><span>XP total gagné</span><span id="totalXPStat">0 XP</span></li>
+                    <li><span>Nombre d'actions</span><span id="totalActionsStat">0</span></li>
+                </ul>
+                <h3>Historique Récent</h3>
+                <ul id="historyList"></ul>
+                <button id="exportStatsBtn" class="export-btn-modal">Exporter les statistiques</button>
             </div>
         </div>
     </div>
-    <div id="badgesModal" class="modal"><div class="modal-content"><span class="close-btn">&times;</span><h2>🏆 Mes Badges</h2><div id="badgesGrid"></div></div></div>
-    <div id="statsModal" class="modal"><div class="modal-content"><span class="close-btn">&times;</span><h2>📊 Statistiques</h2><div id="statsContent"></div></div></div>
+
     <div id="ddrModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
             <h2>🔥 Nouvelle Interaction</h2>
-            <div class="ddr-step"><h3 >Étape 1 : Type de fille</h3><div class="girl-types" id="girlTypesContainer"></div></div>
-            <div class="ddr-step"><h3>Étape 2 : Pendant l'interaction</h3><div class="ddr-actions-list" id="ddrActionsContainer"></div></div>
+            <div class="ddr-step">
+                <h3>Étape 1 : Type de fille</h3>
+                <div class="girl-types" id="girlTypesContainer"></div>
+            </div>
+            <div class="ddr-step">
+                <h3>Étape 2 : Pendant l'interaction</h3>
+                <div class="ddr-actions-list" id="ddrActionsContainer"></div>
+            </div>
             <button id="ddrSubmitBtn">Valider et Gagner l'XP</button>
         </div>
     </div>
 
     <div id="xpPopup" class="xp-popup"></div>
-    <div id="badgeUnlockedPopup" class="badge-unlocked-popup"><div id="badgeEmoji" class="emoji"></div><h3>NOUVEAU BADGE</h3><p id="badgeName"></p></div>
+    <div id="badgeUnlockedPopup" class="badge-unlocked-popup">
+        <div id="badgeEmoji" class="emoji"></div>
+        <h3>NOUVEAU BADGE</h3>
+        <p id="badgeName"></p>
+    </div>
     <audio id="soundEffect" src="https://assets.mixkit.co/sfx/preview/mixkit-game-level-up-2059.mp3" preload="auto"></audio>
     <audio id="badgeSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" preload="auto"></audio>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const ECHAUFFEMENT_ACTIONS = [
-        { id: 'askTime', name: 'Demander l\'heure', xp: 5, emoji: '🕒' },
-        { id: 'askTissue', name: 'Demander un mouchoir', xp: 10, emoji: '🤧' },
-        { id: 'quickInteraction', name: 'Interaction rapide', xp: 20, emoji: '💬' },
-    ];
-    const DDR_GIRL_TYPES = [
-        { id: 'normal', name: 'Fille normale', emoji: '👩', multiplier: 1.0 },
-        { id: '7plus', name: '7/10+', emoji: '💃', multiplier: 1.5 },
-        { id: '9plus', name: '9/10+', emoji: '👑', multiplier: 2.0 },
-    ];
-    const DDR_ACTIONS = [
-        { type: 'hierarchical', id: 'sourire', name: 'La faire sourire', xp: 5, order: 1, emoji: '😊' },
-        { type: 'hierarchical', id: 'compliment', name: 'Faire un compliment', xp: 10, order: 2, emoji: '😍' },
-        { type: 'hierarchical', id: 'abordage', name: 'Abordage contextuel', xp: 15, order: 3, emoji: '👋' },
-        { type: 'standalone', id: 'duo', name: 'Abordage duo', xp: 20, emoji: '👥' },
-        { type: 'standalone', id: 'trio', name: 'Abordage trio', xp: 40, emoji: '👨‍👩‍👧' },
-        { type: 'standalone', id: 'groupe', name: 'Abordage groupe (+3)', xp: 60, emoji: '👨‍👩‍👧‍👦' },
-        { type: 'hierarchical', id: 'convCourte', name: 'Conversation < 2 min', xp: 20, order: 4, emoji: '🗣️' },
-        { type: 'hierarchical', id: 'convLongue', name: 'Conversation longue', xp: 30, order: 5, emoji: '💬' },
-        { type: 'hierarchical', id: 'rire', name: 'La faire rire', xp: 25, order: 6, emoji: '😂' },
-        { type: 'hierarchical', id: 'complicite', name: 'Créer une complicité', xp: 35, order: 7, emoji: '😉' },
-        { type: 'hierarchical', id: 'instagram', name: 'Obtenir l’Instagram', xp: 40, order: 8, emoji: '📸' },
-        { type: 'hierarchical', id: 'whatsapp', name: 'Obtenir le WhatsApp', xp: 60, order: 9, emoji: '📱' },
-        { type: 'standalone', id: 'donnerContact', name: 'Donner son contact', xp: 10, emoji: '📤' },
-        { type: 'hierarchical', id: 'bise', name: 'Faire la bise', xp: 25, order: 10, emoji: '😘' },
-        { type: 'hierarchical', id: 'tactile', name: 'Être tactile', xp: 30, order: 11, emoji: '🖐️' },
-        { type: 'hierarchical', id: 'bisou', name: 'Obtenir un bisou', xp: 120, order: 12, emoji: '💋' },
-        { type: 'hierarchical', id: 'instantDate', name: 'Instant date', xp: 150, order: 13, emoji: '☕' },
-        { type: 'hierarchical', id: 'ramener', name: 'Ramener la fille chez soi', xp: 250, order: 14, emoji: '🔥' },
-    ];
-    const BADGES = [
-        { id: 'debutant', type: 'stat', stat: 'abordages', requirement: 1, name: 'Débutant Courageux', emoji: '🐣' },
-        { id: 'level3', type: 'level', requirement: 3, name: 'Premier Pas', emoji: '👟' },
-        { id: 'level5', type: 'level', requirement: 5, name: 'Explorateur Social', emoji: '🧭' },
-        { id: 'chasseurNumero', type: 'stat', stat: 'whatsapp', requirement: 10, name: 'Chasseur de numéros', emoji: '🏆' },
-        { id: 'level10', type: 'level', requirement: 10, name: 'Sans Peur', emoji: '💪' },
-        { id: 'influenceurIRL', type: 'stat', stat: 'instagram', requirement: 10, name: 'Influenceur IRL', emoji: '📸' },
-        { id: 'seducteur', type: 'stat', stat: 'bisous', requirement: 1, name: 'Séducteur Légendaire', emoji: '💋' },
-    ];
-    const XP_BASE = 100;
-    const XP_FACTOR = 1.5;
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Configuration des actions d'échauffement
+            const ECHAUFFEMENT_ACTIONS = [
+                { id: 'askTime', name: 'Demander l\'heure', xp: 5, emoji: '🕒' },
+                { id: 'askTissue', name: 'Demander un mouchoir', xp: 10, emoji: '🤧' },
+                { id: 'quickInteraction', name: 'Interaction rapide', xp: 20, emoji: '💬' },
+            ];
 
-    const dom = {
-        levelNumber: document.getElementById('levelNumber'),
-        progressFill: document.getElementById('progressFill'),
-        currentXP: document.getElementById('currentXP'),
-        nextLevelXP: document.getElementById('nextLevelXP'),
-        abordageCount: document.getElementById('abordageCount'),
-        xpToday: document.getElementById('xpToday'),
-        streakDays: document.getElementById('streakDays'),
-        xpPopup: document.getElementById('xpPopup'),
-        undoBtn: document.getElementById('undoBtn'),
-        menuBtn: document.getElementById('menuBtn'),
-        badgesBtn: document.getElementById('badgesBtn'),
-        statsBtn: document.getElementById('statsBtn'),
-        resetBtn: document.getElementById('resetBtn'),
-        ddrModeBtn: document.getElementById('ddrModeBtn'),
-        echauffementModeBtn: document.getElementById('echauffementModeBtn'),
-        appContainer: document.getElementById('appContainer'),
-        ddrModeContainer: document.getElementById('ddrModeContainer'),
-        echauffementModeContainer: document.getElementById('echauffementModeContainer'),
-        actionsGrid: document.getElementById('actionsGrid'),
-        newInteractionBtn: document.getElementById('newInteractionBtn'),
-        sideMenuModal: document.getElementById('sideMenuModal'),
-        badgesModal: document.getElementById('badgesModal'),
-        statsModal: document.getElementById('statsModal'),
-        ddrModal: document.getElementById('ddrModal'),
-        badgesGrid: document.getElementById('badgesGrid'),
-        statsContent: document.getElementById('statsContent'),
-        girlTypesContainer: document.getElementById('girlTypesContainer'),
-        ddrActionsContainer: document.getElementById('ddrActionsContainer'),
-        ddrSubmitBtn: document.getElementById('ddrSubmitBtn'),
-        soundEffect: document.getElementById('soundEffect'),
-        badgeSound: document.getElementById('badgeSound'),
-    };
+            // Configuration des types de filles pour le DDR
+            const DDR_GIRL_TYPES = [
+                { id: 'normal', name: 'Fille normale', emoji: '👩', multiplier: 1.0 },
+                { id: '7plus', name: '7/10+', emoji: '💃', multiplier: 1.5 },
+                { id: '9plus', name: '9/10+', emoji: '👑', multiplier: 2.0 },
+            ];
 
-    let player = {};
-    let actionHistory = [];
+            // Configuration des actions DDR - classées par XP croissant
+            const DDR_ACTIONS = [
+                { type: 'hierarchical', id: 'sourire', name: 'La faire sourire', xp: 5, order: 1, emoji: '😊' },
+                { type: 'hierarchical', id: 'compliment', name: 'Faire un compliment', xp: 10, order: 2, emoji: '😍' },
+                { type: 'hierarchical', id: 'abordage', name: 'Abordage contextuel', xp: 15, order: 3, emoji: '👋' },
+                { type: 'standalone', id: 'donnerContact', name: 'Donner son contact', xp: 10, emoji: '📤' },
+                { type: 'hierarchical', id: 'convCourte', name: 'Conversation < 2 min', xp: 20, order: 4, emoji: '🗣️' },
+                { type: 'standalone', id: 'duo', name: 'Abordage duo', xp: 20, emoji: '👥' },
+                { type: 'hierarchical', id: 'rire', name: 'La faire rire', xp: 25, order: 6, emoji: '😂' },
+                { type: 'hierarchical', id: 'bise', name: 'Faire la bise', xp: 25, order: 10, emoji: '😘' },
+                { type: 'hierarchical', id: 'tactile', name: 'Être tactile', xp: 30, order: 11, emoji: '🖐️' },
+                { type: 'hierarchical', id: 'convLongue', name: 'Conversation longue', xp: 30, order: 5, emoji: '💬' },
+                { type: 'hierarchical', id: 'complicite', name: 'Créer une complicité', xp: 35, order: 7, emoji: '😉' },
+                { type: 'hierarchical', id: 'instagram', name: 'Obtenir l\'Instagram', xp: 40, order: 8, emoji: '📸' },
+                { type: 'standalone', id: 'trio', name: 'Abordage trio', xp: 40, emoji: '👨‍👩‍👧' },
+                { type: 'hierarchical', id: 'whatsapp', name: 'Obtenir le WhatsApp', xp: 60, order: 9, emoji: '📱' },
+                { type: 'standalone', id: 'groupe', name: 'Abordage groupe (+3)', xp: 60, emoji: '👨‍👩‍👧‍👦' },
+                { type: 'hierarchical', id: 'bisou', name: 'Obtenir un bisou', xp: 120, order: 12, emoji: '💋' },
+                { type: 'hierarchical', id: 'instantDate', name: 'Instant date', xp: 150, order: 13, emoji: '☕' },
+                { type: 'hierarchical', id: 'ramener', name: 'Ramener la fille chez soi', xp: 250, order: 14, emoji: '🔥' },
+            ];
 
-    const resetPlayerState = () => ({
-        level: 1, xp: 0, lastXPDate: null, currentStreak: 0, unlockedBadges: [],
-        stats: { abordages: 0, whatsapp: 0, instagram: 0, bisous: 0 },
-        mode: 'ddr'
-    });
+            // Configuration des badges
+            const BADGES = [
+                { id: 'debutant', type: 'stat', stat: 'abordages', requirement: 1, name: 'Débutant Courageux', emoji: '🐣' },
+                { id: 'level3', type: 'level', requirement: 3, name: 'Premier Pas', emoji: '👟' },
+                { id: 'level5', type: 'level', requirement: 5, name: 'Explorateur Social', emoji: '🧭' },
+                { id: 'chasseurNumero', type: 'stat', stat: 'whatsapp', requirement: 10, name: 'Chasseur de numéros', emoji: '🏆' },
+                { id: 'level10', type: 'level', requirement: 10, name: 'Sans Peur', emoji: '💪' },
+                { id: 'influenceurIRL', type: 'stat', stat: 'instagram', requirement: 10, name: 'Influenceur IRL', emoji: '📸' },
+                { id: 'seducteur', type: 'stat', stat: 'bisous', requirement: 1, name: 'Séducteur Légendaire', emoji: '💋' },
+            ];
 
-    const getXPNeeded = (level) => Math.floor(XP_BASE * Math.pow(XP_FACTOR, level - 1));
+            // Défis du jour
+            const DAILY_CHALLENGES = [
+                { name: 'Ose dire bonjour à 5 personnes aujourd\'hui', xp: 100 },
+                { name: 'Demande l\'heure à une inconnue', xp: 80 },
+                { name: 'Transforme une petite interaction en grosse', xp: 120 },
+                { name: 'Essaie d\'obtenir un prénom', xp: 150 },
+                { name: 'Fais une conversation de 3 minutes minimum', xp: 200 }
+            ];
 
-    const saveState = () => {
-        localStorage.setItem('socialXPPlayer', JSON.stringify(player));
-        localStorage.setItem('socialXPActionHistory', JSON.stringify(actionHistory));
-    };
+            const XP_BASE = 100;
+            const XP_FACTOR = 1.5;
 
-    const loadState = () => {
-        const savedPlayer = JSON.parse(localStorage.getItem('socialXPPlayer'));
-        const savedHistory = JSON.parse(localStorage.getItem('socialXPActionHistory'));
-        player = { ...resetPlayerState(), ...savedPlayer };
-        actionHistory = savedHistory || [];
-    };
+            // Récupération des éléments DOM
+            const dom = {
+                levelNumber: document.getElementById('levelNumber'),
+                progressFill: document.getElementById('progressFill'),
+                xpBar: document.getElementById('xpBar'),
+                currentXP: document.getElementById('currentXP'),
+                nextLevelXP: document.getElementById('nextLevelXP'),
+                abordageCount: document.getElementById('abordageCount'),
+                xpToday: document.getElementById('xpToday'),
+                streakDays: document.getElementById('streakDays'),
+                xpPopup: document.getElementById('xpPopup'),
+                undoBtn: document.getElementById('undoBtn'),
+                menuBtn: document.getElementById('menuBtn'),
+                badgesBtn: document.getElementById('badgesBtn'),
+                statsBtn: document.getElementById('statsBtn'),
+                resetBtn: document.getElementById('resetBtn'),
+                exportBtn: document.getElementById('exportBtn'),
+                shareScoreBtn: document.getElementById('shareScoreBtn'),
+                exportStatsBtn: document.getElementById('exportStatsBtn'),
+                ddrModeBtn: document.getElementById('ddrModeBtn'),
+                echauffementModeBtn: document.getElementById('echauffementModeBtn'),
+                appContainer: document.getElementById('appContainer'),
+                ddrModeContainer: document.getElementById('ddrModeContainer'),
+                echauffementModeContainer: document.getElementById('echauffementModeContainer'),
+                actionsGrid: document.getElementById('actionsGrid'),
+                newInteractionBtn: document.getElementById('newInteractionBtn'),
+                sideMenuModal: document.getElementById('sideMenuModal'),
+                badgesModal: document.getElementById('badgesModal'),
+                statsModal: document.getElementById('statsModal'),
+                ddrModal: document.getElementById('ddrModal'),
+                badgesGrid: document.getElementById('badgesGrid'),
+                statsContent: document.getElementById('statsContent'),
+                historyList: document.getElementById('historyList'),
+                totalXPStat: document.getElementById('totalXPStat'),
+                totalActionsStat: document.getElementById('totalActionsStat'),
+                girlTypesContainer: document.getElementById('girlTypesContainer'),
+                ddrActionsContainer: document.getElementById('ddrActionsContainer'),
+                ddrSubmitBtn: document.getElementById('ddrSubmitBtn'),
+                soundEffect: document.getElementById('soundEffect'),
+                badgeSound: document.getElementById('badgeSound'),
+                dailyChallengeSection: document.getElementById('dailyChallengeSection'),
+                dailyChallengeDescription: document.getElementById('dailyChallengeDescription'),
+                dailyChallengeBtn: document.getElementById('dailyChallengeBtn')
+            };
 
-    const updateUI = () => {
-        const xpNeeded = getXPNeeded(player.level);
-        const xpPercent = Math.min((player.xp / xpNeeded) * 100, 100);
-        const circumference = 2 * Math.PI * 31;
-        dom.progressFill.style.strokeDashoffset = circumference - (xpPercent / 100) * circumference;
+            // État du joueur
+            let player = {
+                level: 1,
+                xp: 0,
+                history: [],
+                lastXPDate: null,
+                currentStreak: 0,
+                unlockedBadges: [],
+                stats: { abordages: 0, whatsapp: 0, instagram: 0, bisous: 0 },
+                mode: 'ddr',
+                dailyChallenge: null,
+                challengeCompletedToday: false
+            };
+            let actionHistory = [];
 
-        dom.levelNumber.textContent = player.level;
-        dom.currentXP.textContent = `${Math.floor(player.xp)} XP`;
-        dom.nextLevelXP.textContent = `${xpNeeded} XP`;
-        dom.abordageCount.textContent = player.stats.abordages || 0;
-        dom.streakDays.textContent = player.currentStreak;
+            // Fonctions utilitaires
+            const getXPNeededForNextLevel = (level) => {
+                if (level <= 1) return XP_BASE;
+                return Math.floor(XP_BASE * Math.pow(XP_FACTOR, level - 1));
+            };
 
-        const todayStr = new Date().toISOString().split('T')[0];
-        const todayXP = actionHistory.filter(a => a.timestamp?.startsWith(todayStr)).reduce((sum, a) => sum + a.xp, 0);
-        dom.xpToday.textContent = todayXP;
+            const resetPlayerState = () => ({
+                level: 1,
+                xp: 0,
+                history: [],
+                lastXPDate: null,
+                currentStreak: 0,
+                unlockedBadges: [],
+                stats: { abordages: 0, whatsapp: 0, instagram: 0, bisous: 0 },
+                mode: 'ddr',
+                dailyChallenge: null,
+                challengeCompletedToday: false
+            });
 
-        dom.ddrModeContainer.classList.toggle('active', player.mode === 'ddr');
-        dom.echauffementModeContainer.classList.toggle('active', player.mode === 'echauffement');
-        dom.ddrModeBtn.classList.toggle('active', player.mode === 'ddr');
-        dom.echauffementModeBtn.classList.toggle('active', player.mode === 'echauffement');
-    };
+            const saveData = () => {
+                localStorage.setItem('socialXPPlayer', JSON.stringify(player));
+                localStorage.setItem('socialXPActionHistory', JSON.stringify(actionHistory));
+                localStorage.setItem('challengeCompletedToday', player.challengeCompletedToday);
+                if (player.dailyChallenge) {
+                    localStorage.setItem('dailyChallenge', JSON.stringify(player.dailyChallenge));
+                }
+            };
 
-    const grantXP = (amount, type, details = {}) => {
-        if (amount <= 0) return;
-        const stateBefore = JSON.parse(JSON.stringify(player));
-        player.xp += amount;
-        
-        let xpNeeded = getXPNeeded(player.level);
-        while (player.xp >= xpNeeded) {
-            player.level++;
-            player.xp -= xpNeeded;
-            xpNeeded = getXPNeeded(player.level);
-            dom.levelNumber.classList.add('level-up');
-            setTimeout(() => dom.levelNumber.classList.remove('level-up'), 500);
-            dom.soundEffect.play().catch(e => console.error(e));
-        }
-        
-        actionHistory.push({ xp: amount, type, details, timestamp: new Date().toISOString(), stateBefore });
-        updateStreak();
-        showXpPopup(amount);
-        checkAndUnlockBadges();
-        updateUI();
-        saveState();
-    };
+            const loadData = () => {
+                const savedPlayer = localStorage.getItem('socialXPPlayer');
+                if (savedPlayer) {
+                    player = JSON.parse(savedPlayer);
+                }
+                const savedHistory = localStorage.getItem('socialXPActionHistory');
+                if (savedHistory) {
+                    actionHistory = JSON.parse(savedHistory);
+                }
+                const savedCompleted = localStorage.getItem('challengeCompletedToday');
+                if (savedCompleted) {
+                    player.challengeCompletedToday = savedCompleted === 'true';
+                }
+                const savedChallenge = localStorage.getItem('dailyChallenge');
+                if (savedChallenge) {
+                    player.dailyChallenge = JSON.parse(savedChallenge);
+                }
+            };
 
-    const undoLastAction = () => {
-        if (actionHistory.length === 0) return alert("Rien à annuler.");
-        player = actionHistory.pop().stateBefore;
-        updateUI();
-        saveState();
-        alert("Dernière action annulée.");
-    };
+            const updateUI = () => {
+                const xpNeeded = getXPNeededForNextLevel(player.level);
+                const xpPercent = Math.min((player.xp / xpNeeded) * 100, 100);
+                
+                // Mise à jour de la barre de progression circulaire
+                const circumference = 2 * Math.PI * 31;
+                dom.progressFill.style.strokeDashoffset = circumference - (xpPercent / 100) * circumference;
+                
+                // Mise à jour de la barre de progression linéaire
+                dom.xpBar.style.width = `${xpPercent}%`;
 
-    const setMode = (mode) => {
-        player.mode = mode;
-        updateUI();
-        saveState();
-    };
+                dom.levelNumber.textContent = player.level;
+                dom.currentXP.textContent = `${Math.floor(player.xp)} XP`;
+                dom.nextLevelXP.textContent = `${xpNeeded} XP`;
+                dom.abordageCount.textContent = player.stats.abordages || 0;
+                dom.streakDays.textContent = player.currentStreak;
 
-    const buildModals = {
-        ddr: () => {
-            dom.girlTypesContainer.innerHTML = DDR_GIRL_TYPES.map((type, i) => `
-                <label class="girl-type ${i === 0 ? 'selected' : ''}" for="girl-${type.id}">
-                    <div class="emoji">${type.emoji}</div>
-                    <span>${type.name}</span>
-                    <p>x${type.multiplier.toFixed(1)} XP</p>
-                    <input type="radio" name="girlType" value="${type.multiplier}" id="girl-${type.id}" ${i === 0 ? 'checked' : ''}>
-                </label>
-            `).join('');
-            dom.ddrActionsContainer.innerHTML = DDR_ACTIONS.map(a => `<label class="action-checkbox-label" for="${a.id}"><input type="checkbox" id="${a.id}" data-order="${a.order||0}" data-type="${a.type}"><div class="custom-checkbox"></div><div class="content"><span>${a.emoji} ${a.name}</span></div><span class="xp-tag">+${a.xp} XP</span></label>`).join('');
-            dom.girlTypesContainer.querySelectorAll('.girl-type').forEach(l => l.addEventListener('click', () => { dom.girlTypesContainer.querySelector('.selected')?.classList.remove('selected'); l.classList.add('selected'); }));
-        },
-        badges: () => { dom.badgesGrid.innerHTML = BADGES.map(b => `<div class="badge-item ${player.unlockedBadges.includes(b.id)?'unlocked':''}"><div class="emoji">${b.emoji}</div><p>${b.name}</p></div>`).join(''); },
-        stats: () => {
-            const totalXP = actionHistory.reduce((s, a) => s + a.xp, 0);
-            dom.statsContent.innerHTML = `<ul>
-                <li><span>Niveau</span><span>${player.level}</span></li>
-                <li><span>XP Total</span><span>${totalXP}</span></li>
-                <li><span>Abordages</span><span>${player.stats.abordages}</span></li>
-                <li><span>WhatsApp</span><span>${player.stats.whatsapp}</span></li>
-                <li><span>Instagram</span><span>${player.stats.instagram}</span></li>
-                <li><span>Bisous</span><span>${player.stats.bisous}</span></li>
-                <li><span>Série</span><span>${player.currentStreak} jours</span></li>
-            </ul>`;
-        }
-    };
-    
-    const handleDdrSubmit = (e) => {
-        e.preventDefault();
-        const multiplier = parseFloat(dom.ddrModal.querySelector('input[name="girlType"]:checked').value);
-        const checked = [...dom.ddrActionsContainer.querySelectorAll('input:checked')];
-        if (checked.length === 0) return alert("Sélectionnez au moins une action.");
+                const todayStr = new Date().toISOString().split('T')[0];
+                const todayXP = player.history
+                    .filter(entry => new Date(entry.date).toISOString().split('T')[0] === todayStr)
+                    .reduce((sum, entry) => sum + entry.xp, 0);
+                dom.xpToday.textContent = todayXP;
 
-        let totalXp = 0;
-        const actionsPerformed = new Set();
-        const highestOrder = checked.reduce((max, cb) => Math.max(max, parseInt(cb.dataset.order)), 0);
+                dom.ddrModeContainer.classList.toggle('active', player.mode === 'ddr');
+                dom.echauffementModeContainer.classList.toggle('active', player.mode === 'echauffement');
+                dom.ddrModeBtn.classList.toggle('active', player.mode === 'ddr');
+                dom.echauffementModeBtn.classList.toggle('active', player.mode === 'echauffement');
+                
+                dom.undoBtn.disabled = actionHistory.length === 0;
+            };
 
-        DDR_ACTIONS.forEach(action => {
-            if (action.type === 'hierarchical' && action.order <= highestOrder) {
-                totalXp += action.xp;
-                actionsPerformed.add(action.id);
-            }
+            const grantXP = (amount, type, details = {}) => {
+                if (amount <= 0) return;
+                const stateBefore = JSON.parse(JSON.stringify(player));
+                player.xp += amount;
+                
+                let xpNeeded = getXPNeededForNextLevel(player.level);
+                let leveledUp = false;
+                
+                while (player.xp >= xpNeeded) {
+                    player.level++;
+                    player.xp -= xpNeeded;
+                    xpNeeded = getXPNeededForNextLevel(player.level);
+                    leveledUp = true;
+                }
+                
+                // Mise à jour de l'historique
+                addHistoryEntry(amount, type, details);
+                actionHistory.push({ 
+                    xp: amount, 
+                    type, 
+                    details, 
+                    timestamp: new Date().toISOString(), 
+                    stateBefore 
+                });
+                
+                // Mise à jour de la série
+                updateStreak();
+                
+                // Affichage du popup XP
+                showXpPopup(amount);
+                
+                if (leveledUp) {
+                    triggerLevelUpAnimation();
+                    createConfetti(30);
+                    playSound(dom.soundEffect);
+                }
+                
+                // Vérification des badges
+                checkAndUnlockBadges();
+                
+                updateUI();
+                saveData();
+            };
+
+            const addHistoryEntry = (amount, type, details = {}) => {
+                const entry = {
+                    date: new Date().toISOString(),
+                    xp: amount,
+                    type: type,
+                    details: details
+                };
+                player.history.unshift(entry);
+                if (player.history.length > 50) {
+                    player.history.pop();
+                }
+            };
+
+            const updateStreak = () => {
+                const today = new Date();
+                const lastDate = player.lastXPDate ? new Date(player.lastXPDate) : null;
+                const yesterday = new Date(today);
+                yesterday.setDate(today.getDate() - 1);
+                
+                if (!lastDate || today.toDateString() === lastDate.toDateString()) {
+                    // Ne rien faire, la série est maintenue
+                } else if (lastDate && yesterday.toDateString() === lastDate.toDateString()) {
+                    player.currentStreak++;
+                } else {
+                    player.currentStreak = 1;
+                }
+                
+                player.lastXPDate = today.toDateString();
+            };
+
+            const undoLastAction = () => {
+                if (actionHistory.length === 0) return alert("Rien à annuler.");
+                player = actionHistory.pop().stateBefore;
+                updateUI();
+                saveData();
+                alert("Dernière action annulée.");
+            };
+
+            const setMode = (mode) => {
+                player.mode = mode;
+                updateUI();
+                saveData();
+            };
+
+            const playSound = (soundElement) => {
+                if (soundElement) {
+                    soundElement.currentTime = 0;
+                    soundElement.play().catch(e => console.error("Audio playback failed:", e));
+                }
+            };
+
+            const showXpPopup = (amount) => {
+                dom.xpPopup.textContent = `+${amount} XP`;
+                dom.xpPopup.classList.add('show');
+                setTimeout(() => {
+                    dom.xpPopup.classList.remove('show');
+                }, 1500);
+            };
+
+            const triggerLevelUpAnimation = () => {
+                dom.levelNumber.classList.add('level-up');
+                setTimeout(() => {
+                    dom.levelNumber.classList.remove('level-up');
+                }, 500);
+            };
+
+            const createConfetti = (count) => {
+                for (let i = 0; i < count; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+                    confetti.style.left = `${Math.random() * 100}vw`;
+                    confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 3000);
+                }
+            };
+
+            const checkAndUnlockBadges = () => {
+                BADGES.forEach(badge => {
+                    if (player.unlockedBadges.includes(badge.id)) return;
+                    
+                    let unlocked = false;
+                    
+                    if (badge.type === 'level' && player.level >= badge.requirement) {
+                        unlocked = true;
+                    } else if (badge.type === 'stat' && player.stats[badge.stat] >= badge.requirement) {
+                        unlocked = true;
+                    }
+                    
+                    if (unlocked) {
+                        player.unlockedBadges.push(badge.id);
+                        showBadgeUnlocked(badge);
+                        playSound(dom.badgeSound);
+                    }
+                });
+            };
+
+            const showBadgeUnlocked = (badge) => {
+                const popup = document.getElementById('badgeUnlockedPopup');
+                const emojiEl = document.getElementById('badgeEmoji');
+                const nameEl = document.getElementById('badgeName');
+
+                emojiEl.textContent = badge.emoji;
+                nameEl.textContent = badge.name;
+
+                popup.classList.add('show');
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3000);
+            };
+
+            const openModal = (modal) => {
+                modal.classList.add('visible');
+            };
+
+            const closeModal = (modal) => {
+                modal.classList.remove('visible');
+            };
+
+            const buildModals = {
+                ddr: () => {
+                    dom.girlTypesContainer.innerHTML = DDR_GIRL_TYPES.map((type, i) => `
+                        <label class="girl-type ${i === 0 ? 'selected' : ''}" for="girl-${type.id}">
+                            <div class="emoji">${type.emoji}</div>
+                            <span>${type.name}</span>
+                            <p>x${type.multiplier.toFixed(1)} XP</p>
+                            <input type="radio" name="girlType" value="${type.multiplier}" id="girl-${type.id}" ${i === 0 ? 'checked' : ''}>
+                        </label>
+                    `).join('');
+                    
+                    // Trier les actions DDR par XP croissant
+                    const sortedActions = [...DDR_ACTIONS].sort((a, b) => a.xp - b.xp);
+                    
+                    dom.ddrActionsContainer.innerHTML = sortedActions.map(a => `
+                        <label class="action-checkbox-label" for="${a.id}">
+                            <input type="checkbox" id="${a.id}" data-order="${a.order||0}" data-type="${a.type}">
+                            <div class="custom-checkbox"></div>
+                            <div class="content">
+                                <span>${a.emoji} ${a.name}</span>
+                            </div>
+                            <span class="xp-tag">+${a.xp} XP</span>
+                        </label>
+                    `).join('');
+                    
+                    dom.girlTypesContainer.querySelectorAll('.girl-type').forEach(l => {
+                        l.addEventListener('click', () => {
+                            dom.girlTypesContainer.querySelector('.selected')?.classList.remove('selected');
+                            l.classList.add('selected');
+                            l.querySelector('input').checked = true;
+                        });
+                    });
+                },
+                
+                badges: () => {
+                    dom.badgesGrid.innerHTML = BADGES.map(b => `
+                        <div class="badge-item ${player.unlockedBadges.includes(b.id) ? 'unlocked' : ''}">
+                            <div class="emoji">${b.emoji}</div>
+                            <p>${b.name}</p>
+                        </div>
+                    `).join('');
+                },
+                
+                stats: () => {
+                    const totalXP = player.history.reduce((sum, entry) => sum + entry.xp, 0);
+                    dom.totalXPStat.textContent = `${totalXP} XP`;
+                    dom.totalActionsStat.textContent = player.history.length;
+                    
+                    dom.historyList.innerHTML = '';
+                    player.history.slice(0, 10).forEach(entry => {
+                        const li = document.createElement('li');
+                        const date = new Date(entry.date).toLocaleDateString('fr-FR', {
+                            day: 'numeric', 
+                            month: 'short', 
+                            hour: '2-digit', 
+                            minute: '2-digit'
+                        });
+                        li.innerHTML = `
+                            <span>${entry.type}</span>
+                            <span>+${entry.xp} XP <small>(${date})</small></span>
+                        `;
+                        dom.historyList.appendChild(li);
+                    });
+                }
+            };
+
+            const handleDdrSubmit = (e) => {
+                e.preventDefault();
+                const multiplier = parseFloat(dom.ddrModal.querySelector('input[name="girlType"]:checked').value);
+                const checked = [...dom.ddrActionsContainer.querySelectorAll('input:checked')];
+                
+                if (checked.length === 0) {
+                    return alert("Sélectionnez au moins une action.");
+                }
+
+                let totalXp = 0;
+                const actionsPerformed = new Set();
+                const highestOrder = checked.reduce((max, cb) => Math.max(max, parseInt(cb.dataset.order)), 0);
+
+                // Ajouter les actions hiérarchiques jusqu'au plus haut ordre sélectionné
+                DDR_ACTIONS.forEach(action => {
+                    if (action.type === 'hierarchical' && action.order <= highestOrder) {
+                        totalXp += action.xp;
+                        actionsPerformed.add(action.id);
+                    }
+                });
+                
+                // Ajouter les actions standalone sélectionnées
+                checked.forEach(input => {
+                    if (input.dataset.type === 'standalone') {
+                        const action = DDR_ACTIONS.find(a => a.id === input.id);
+                        totalXp += action.xp;
+                        actionsPerformed.add(action.id);
+                    }
+                });
+
+                // Mettre à jour les statistiques
+                player.stats.abordages++;
+                if (actionsPerformed.has('whatsapp')) player.stats.whatsapp++;
+                if (actionsPerformed.has('instagram')) player.stats.instagram++;
+                if (actionsPerformed.has('bisou')) player.stats.bisous++;
+
+                grantXP(Math.round(totalXp * multiplier), 'Interaction DDR', { 
+                    actions: [...actionsPerformed], 
+                    multiplier 
+                });
+                
+                closeModal(dom.ddrModal);
+            };
+
+            const getDailyChallenge = () => {
+                const today = new Date().toDateString();
+                const lastChallengeDate = localStorage.getItem('lastChallengeDate');
+                
+                if (lastChallengeDate !== today) {
+                    const seed = today.length + new Date().getDay() + new Date().getMonth();
+                    const challengeIndex = Math.abs(seed % DAILY_CHALLENGES.length);
+                    player.dailyChallenge = DAILY_CHALLENGES[challengeIndex];
+                    player.challengeCompletedToday = false;
+                    localStorage.setItem('lastChallengeDate', today);
+                    localStorage.setItem('dailyChallenge', JSON.stringify(player.dailyChallenge));
+                    localStorage.setItem('challengeCompletedToday', 'false');
+                } else {
+                    const savedChallenge = localStorage.getItem('dailyChallenge');
+                    const savedCompleted = localStorage.getItem('challengeCompletedToday');
+                    player.dailyChallenge = savedChallenge ? JSON.parse(savedChallenge) : null;
+                    player.challengeCompletedToday = savedCompleted === 'true';
+                }
+                renderDailyChallenge();
+            };
+
+            const renderDailyChallenge = () => {
+                if (!player.dailyChallenge) return;
+                dom.dailyChallengeSection.style.display = 'block';
+                dom.dailyChallengeDescription.textContent = player.dailyChallenge.name;
+                dom.dailyChallengeBtn.textContent = `Valider le défi (+${player.dailyChallenge.xp} XP)`;
+                dom.dailyChallengeBtn.disabled = player.challengeCompletedToday;
+                if (player.challengeCompletedToday) {
+                    dom.dailyChallengeBtn.textContent = 'Défi complété ! ✅';
+                }
+            };
+
+            const completeDailyChallenge = () => {
+                if (!player.challengeCompletedToday) {
+                    grantXP(player.dailyChallenge.xp, `Défi du jour : ${player.dailyChallenge.name}`);
+                    player.challengeCompletedToday = true;
+                    localStorage.setItem('challengeCompletedToday', 'true');
+                    renderDailyChallenge();
+                }
+            };
+
+            const shareScore = () => {
+                const totalXP = player.history.reduce((sum, entry) => sum + entry.xp, 0);
+                const shareText = `Je suis niveau ${player.level} et j'ai gagné ${totalXP} XP sur XP Social ! 🔥`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Mon score XP Social',
+                        text: shareText,
+                        url: window.location.href,
+                    }).catch(error => console.error('Erreur de partage:', error));
+                } else {
+                    alert('Le partage web n\'est pas supporté par votre navigateur. Vous pouvez copier ce texte : ' + shareText);
+                }
+            };
+
+            const exportProgress = () => {
+                const dataStr = JSON.stringify({
+                    player: player,
+                    actionHistory: actionHistory
+                }, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = `xp-social-progress-${new Date().toISOString().split('T')[0]}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+            };
+
+            const exportStats = () => {
+                const totalXP = player.history.reduce((sum, entry) => sum + entry.xp, 0);
+                const statsText = `
+Statistiques XP Social - ${new Date().toLocaleDateString('fr-FR')}
+
+Niveau: ${player.level}
+XP Total: ${totalXP}
+Abordages: ${player.stats.abordages}
+WhatsApp obtenus: ${player.stats.whatsapp}
+Instagram obtenus: ${player.stats.instagram}
+Bisous: ${player.stats.bisous}
+Série actuelle: ${player.currentStreak} jours
+
+Dernières actions:
+${player.history.slice(0, 10).map(entry => `- ${entry.type}: +${entry.xp} XP (${new Date(entry.date).toLocaleDateString('fr-FR')})`).join('\n')}
+                `.trim();
+                
+                const dataUri = 'data:text/plain;charset=utf-8,'+ encodeURIComponent(statsText);
+                const exportFileDefaultName = `xp-social-stats-${new Date().toISOString().split('T')[0]}.txt`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+            };
+
+            const resetProgress = () => {
+                if (confirm('Êtes-vous sûr de vouloir réinitialiser toute votre progression ? Cette action est irréversible.')) {
+                    localStorage.clear();
+                    player = resetPlayerState();
+                    actionHistory = [];
+                    updateUI();
+                    renderActions();
+                    getDailyChallenge();
+                    alert('Progression réinitialisée !');
+                }
+            };
+
+            const renderActions = () => {
+                dom.actionsGrid.innerHTML = ECHAUFFEMENT_ACTIONS.map(a => `
+                    <button class="action-btn" data-xp="${a.xp}">
+                        <div class="btn-content">
+                            <span class="btn-emoji">${a.emoji}</span>
+                            <span>${a.name}</span>
+                        </div>
+                        <span class="btn-xp">+${a.xp} XP</span>
+                    </button>
+                `).join('');
+                
+                dom.actionsGrid.querySelectorAll('.action-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        player.stats.abordages++;
+                        grantXP(parseInt(btn.dataset.xp), btn.querySelector('.btn-content span:last-child').textContent);
+                    });
+                });
+            };
+
+            // Initialisation
+            loadData();
+            renderActions();
+            buildModals.ddr();
+            getDailyChallenge();
+            updateUI();
+
+            // Gestionnaires d'événements
+            dom.undoBtn.addEventListener('click', undoLastAction);
+            dom.ddrModeBtn.addEventListener('click', () => setMode('ddr'));
+            dom.echauffementModeBtn.addEventListener('click', () => setMode('echauffement'));
+            dom.menuBtn.addEventListener('click', () => openModal(dom.sideMenuModal));
+            dom.badgesBtn.addEventListener('click', () => { buildModals.badges(); openModal(dom.badgesModal); });
+            dom.statsBtn.addEventListener('click', () => { buildModals.stats(); openModal(dom.statsModal); });
+            dom.exportBtn.addEventListener('click', exportProgress);
+            dom.exportStatsBtn.addEventListener('click', exportStats);
+            dom.shareScoreBtn.addEventListener('click', shareScore);
+            dom.resetBtn.addEventListener('click', resetProgress);
+            dom.newInteractionBtn.addEventListener('click', () => { 
+                dom.ddrModal.querySelector('form')?.reset(); 
+                dom.girlTypesContainer.querySelector('.selected')?.classList.remove('selected'); 
+                dom.girlTypesContainer.firstElementChild.classList.add('selected'); 
+                dom.girlTypesContainer.firstElementChild.querySelector('input').checked = true;
+                openModal(dom.ddrModal); 
+            });
+            dom.ddrSubmitBtn.addEventListener('click', handleDdrSubmit);
+            dom.dailyChallengeBtn.addEventListener('click', completeDailyChallenge);
+
+            // Fermeture des modals
+            document.querySelectorAll('.modal .close-btn').forEach(btn => {
+                btn.addEventListener('click', () => closeModal(btn.closest('.modal')));
+            });
+            
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', e => {
+                    if (e.target === modal) closeModal(modal);
+                });
+            });
         });
-        checked.forEach(input => {
-            if (input.dataset.type === 'standalone') {
-                const action = DDR_ACTIONS.find(a => a.id === input.id);
-                totalXp += action.xp;
-                actionsPerformed.add(action.id);
-            }
-        });
-
-        player.stats.abordages++;
-        if (actionsPerformed.has('whatsapp')) player.stats.whatsapp++;
-        if (actionsPerformed.has('instagram')) player.stats.instagram++;
-        if (actionsPerformed.has('bisou')) player.stats.bisous++;
-
-        grantXP(Math.round(totalXp * multiplier), 'ddr', { actions: [...actionsPerformed], multiplier });
-        closeModal(dom.ddrModal);
-    };
-
-    // --- Helpers & Init ---
-    const showXpPopup = (amount) => { dom.xpPopup.textContent = `+${amount} XP`; dom.xpPopup.classList.add('show'); setTimeout(() => dom.xpPopup.classList.remove('show'), 1500); };
-    const updateStreak = () => { const today = new Date().toDateString(); if (player.lastXPDate === today) return; const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1); player.currentStreak = player.lastXPDate === yesterday.toDateString() ? player.currentStreak + 1 : 1; player.lastXPDate = today; };
-    const openModal = (modal) => modal.classList.add('visible');
-    const closeModal = (modal) => modal.classList.remove('visible');
-    const checkAndUnlockBadges = () => BADGES.forEach(badge => { if(player.unlockedBadges.includes(badge.id)) return; let unlocked = (badge.type === 'level' && player.level >= badge.requirement) || (badge.type === 'stat' && player.stats[badge.stat] >= badge.requirement); if (unlocked) { player.unlockedBadges.push(badge.id); const popup = document.getElementById('badgeUnlockedPopup'); document.getElementById('badgeEmoji').textContent = badge.emoji; document.getElementById('badgeName').textContent = badge.name; popup.classList.add('show'); dom.badgeSound.play().catch(e=>console.error(e)); setTimeout(() => popup.classList.remove('show'), 3000); } });
-
-    loadState();
-    dom.actionsGrid.innerHTML = ECHAUFFEMENT_ACTIONS.map(a => `<button class="action-btn" data-xp="${a.xp}"><div class="btn-content"><span class="btn-emoji">${a.emoji}</span><span>${a.name}</span></div><span class="btn-xp">+${a.xp} XP</span></button>`).join('');
-    dom.actionsGrid.addEventListener('click', e => { const btn = e.target.closest('.action-btn'); if(btn) { player.stats.abordages++; grantXP(parseInt(btn.dataset.xp), 'echauffement'); } });
-    buildModals.ddr();
-    dom.ddrSubmitBtn.addEventListener('click', handleDdrSubmit);
-    dom.undoBtn.addEventListener('click', undoLastAction);
-    dom.ddrModeBtn.addEventListener('click', () => setMode('ddr'));
-    dom.echauffementModeBtn.addEventListener('click', () => setMode('echauffement'));
-    dom.menuBtn.addEventListener('click', () => openModal(dom.sideMenuModal));
-    dom.badgesBtn.addEventListener('click', () => { buildModals.badges(); openModal(dom.badgesModal); });
-    dom.statsBtn.addEventListener('click', () => { buildModals.stats(); openModal(dom.statsModal); });
-    dom.resetBtn.addEventListener('click', () => { if(confirm("Réinitialiser ?")) { localStorage.clear(); actionHistory = []; player = resetPlayerState(); updateUI(); } });
-    dom.newInteractionBtn.addEventListener('click', () => { dom.ddrModal.querySelector('form')?.reset(); dom.girlTypesContainer.querySelector('.selected')?.classList.remove('selected'); dom.girlTypesContainer.firstElementChild.classList.add('selected'); openModal(dom.ddrModal); });
-    document.querySelectorAll('.modal .close-btn').forEach(btn => btn.addEventListener('click', () => closeModal(btn.closest('.modal'))));
-    document.querySelectorAll('.modal').forEach(modal => modal.addEventListener('click', e => { if (e.target === modal) closeModal(modal); }));
-    updateUI();
-});
-</script>
+    </script>
 </body>
 </html>
