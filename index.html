@@ -32,6 +32,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent; /* Correction du bug de scroll */
         }
 
         body {
@@ -274,7 +275,7 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-            -webkit-tap-highlight-color: transparent; /* Empêche le surlignage bleu sur mobile */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .action-btn:hover {
@@ -658,7 +659,8 @@
         </section>
         
         <p class="intro-text">Choisissez une action à accomplir pour gagner de l'XP :</p>
-        <main id="actionsGrid" class="actions-grid"></main>
+        <main id="actionsGrid" class="actions-grid">
+            </main>
         
         <section id="dailyChallengeSection" class="daily-challenge" style="display:none;">
             <h3>🎯 Défi du jour</h3>
@@ -682,9 +684,30 @@
             <span class="close-btn">&times;</span>
             <h2>Menu</h2>
             <div class="menu-links">
-                <button id="badgesBtn" class="action-btn full-width">🏆 Mes Badges</button>
-                <button id="statsBtn" class="action-btn full-width">📊 Statistiques</button>
-                <button id="exportBtn" class="action-btn full-width">⬇️ Exporter la progression</button>
+                <button id="badgesBtn" class="action-btn full-width">
+                    <div class="btn-content">
+                        <span class="btn-emoji">🏆</span>
+                        <span>Mes Badges</span>
+                    </div>
+                </button>
+                <button id="statsBtn" class="action-btn full-width">
+                    <div class="btn-content">
+                        <span class="btn-emoji">📊</span>
+                        <span>Statistiques</span>
+                    </div>
+                </button>
+                <button id="exportBtn" class="action-btn full-width">
+                    <div class="btn-content">
+                        <span class="btn-emoji">⬇️</span>
+                        <span>Exporter la progression</span>
+                    </div>
+                </button>
+                <button id="shareScoreBtn" class="action-btn full-width">
+                    <div class="btn-content">
+                        <span class="btn-emoji">📲</span>
+                        <span>Partager mon score</span>
+                    </div>
+                </button>
             </div>
             <button id="resetBtn" class="action-btn full-width" style="color: #ef4444; border-color: #ef4444; background: #fee2e2; margin-top: 20px;">Réinitialiser la progression</button>
         </div>
@@ -727,9 +750,9 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Configuration
             const SOCIAL_ACTIONS = [
-                { id: 'dareApproach', name: 'Oser aller voir quelqu\'un', xp: 20, emoji: '🏃‍♂️', description: 'Oser faire le premier pas' },
-                { id: 'smallInteraction', name: 'Petite interaction sociale', xp: 30, emoji: '💬', description: 'Pour un échange simple' },
-                { id: 'bigInteraction', name: 'Grosse interaction', xp: 50, emoji: '🗣️', description: 'Pour relancer la conversation' }
+                { id: 'quickInteraction', name: 'Interaction rapide', xp: 20, emoji: '💬', description: 'Oser faire le premier pas' },
+                { id: 'smallInteraction', name: 'Petite interaction sociale', xp: 30, emoji: '🗣️', description: 'Pour un échange simple' },
+                { id: 'bigInteraction', name: 'Grosse interaction', xp: 50, emoji: '🤝', description: 'Pour relancer la conversation' }
             ];
 
             const DAILY_CHALLENGES = [
@@ -763,6 +786,7 @@
             const actionsGridEl = document.getElementById('actionsGrid');
             const xpPopupEl = document.getElementById('xpPopup');
             const undoBtn = document.getElementById('undoBtn');
+            const shareScoreBtn = document.getElementById('shareScoreBtn');
             const resetBtn = document.getElementById('resetBtn');
             const exportBtn = document.getElementById('exportBtn');
             const menuBtn = document.getElementById('menuBtn');
@@ -910,59 +934,16 @@
                 dailyChallengeBtn.textContent = `Valider le défi (+${player.dailyChallenge.xp} XP)`;
                 dailyChallengeBtn.disabled = player.challengeCompletedToday;
                 if (player.challengeCompletedToday) {
-                    dailyChallengeBtn.textContent = 'Défi accompli ✅';
+                    dailyChallengeBtn.textContent = 'Défi complété ! ✅';
                 }
             }
             
-            function claimDailyChallenge() {
-                if (player.challengeCompletedToday) return;
-                grantXP(player.dailyChallenge.xp, 'Défi Quotidien');
-                player.challengeCompletedToday = true;
-                localStorage.setItem('challengeCompletedToday', 'true');
-                renderDailyChallenge();
-                if ('vibrate' in navigator) {
-                    navigator.vibrate(200);
-                }
-            }
-
-            function checkNewBadges(isFirstAction = false) {
-                let newBadges;
-                if (isFirstAction) {
-                    newBadges = BADGES.filter(b => b.firstAction && !player.unlockedBadges.find(ub => ub.firstAction));
-                } else {
-                    newBadges = BADGES.filter(b => b.level && b.level <= player.level && !player.unlockedBadges.find(ub => ub.name === b.name));
-                }
-
-                newBadges.forEach(badge => {
-                    player.unlockedBadges.push(badge);
-                    showBadgeUnlockedPopup(badge);
-                    playSound(badgeSound);
-                });
-            }
-
             function showXPPopup(amount) {
                 xpPopupEl.textContent = `+${amount} XP`;
                 xpPopupEl.classList.add('show');
-                if ('vibrate' in navigator) {
-                    navigator.vibrate(100);
-                }
                 setTimeout(() => {
                     xpPopupEl.classList.remove('show');
-                }, 1200);
-            }
-
-            function showBadgeUnlockedPopup(badge) {
-                const badgeUnlockedPopup = document.getElementById('badgeUnlockedPopup');
-                const badgeEmoji = document.getElementById('badgeEmoji');
-                const badgeName = document.getElementById('badgeName');
-
-                badgeEmoji.textContent = badge.emoji;
-                badgeName.textContent = badge.name;
-                
-                badgeUnlockedPopup.classList.add('show');
-                setTimeout(() => {
-                    badgeUnlockedPopup.classList.remove('show');
-                }, 3000);
+                }, 1500);
             }
 
             function triggerLevelUpAnimation() {
@@ -976,58 +957,35 @@
                 for (let i = 0; i < count; i++) {
                     const confetti = document.createElement('div');
                     confetti.classList.add('confetti');
-                    const size = Math.random() * 8 + 4;
-                    confetti.style.width = `${size}px`;
-                    confetti.style.height = `${size}px`;
-                    confetti.style.left = `${Math.random() * 100}%`;
-                    confetti.style.top = `${Math.random() * -10}%`;
-                    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+                    confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+                    confetti.style.left = `${Math.random() * 100}vw`;
                     confetti.style.animationDelay = `${Math.random() * 0.5}s`;
                     document.body.appendChild(confetti);
-
-                    confetti.addEventListener('animationend', () => {
-                        confetti.remove();
-                    });
-                }
-            }
-
-            function saveData() {
-                localStorage.setItem('playerData', JSON.stringify(player));
-            }
-
-            function loadData() {
-                const savedData = localStorage.getItem('playerData');
-                if (savedData) {
-                    const parsedData = JSON.parse(savedData);
-                    player = { ...player, ...parsedData };
-                    // Ensure history dates are valid Date objects for calculation
-                    player.history = parsedData.history.map(entry => ({
-                        ...entry,
-                        date: new Date(entry.date)
-                    }));
+                    setTimeout(() => confetti.remove(), 3000);
                 }
             }
 
             function updateUI() {
                 levelNumberEl.textContent = player.level;
-                const xpNeededForNext = getXPNeededForNextLevel(player.level);
-                const progress = (player.xp / xpNeededForNext) * 100;
-
-                xpBarEl.style.width = `${progress}%`;
+                const xpNeeded = getXPNeededForNextLevel(player.level);
+                const progressPercentage = (player.xp / xpNeeded) * 100;
+                xpBarEl.style.width = `${progressPercentage}%`;
                 currentXpEl.textContent = `${player.xp} XP`;
-                nextLevelXpEl.textContent = `${xpNeededForNext} XP`;
-
+                nextLevelXpEl.textContent = `${xpNeeded} XP`;
+                
                 const circumference = 2 * Math.PI * 28;
-                const offset = circumference - (progress / 100) * circumference;
+                const offset = circumference - (progressPercentage / 100) * circumference;
                 progressFillEl.style.strokeDashoffset = offset;
                 
                 updateDailyStats();
+                undoBtn.disabled = actionHistory.length === 0;
             }
-            
+
             function updateDailyStats() {
                 const today = new Date().toLocaleDateString('fr-FR');
-                const xpToday = player.history.filter(entry => new Date(entry.date).toLocaleDateString('fr-FR') === today)
-                                              .reduce((sum, entry) => sum + entry.xp, 0);
+                const xpToday = player.history
+                    .filter(entry => new Date(entry.date).toLocaleDateString('fr-FR') === today)
+                    .reduce((sum, entry) => sum + entry.xp, 0);
                 
                 document.getElementById('xpToday').textContent = xpToday;
                 document.getElementById('streakDays').textContent = player.currentStreak;
@@ -1037,194 +995,243 @@
                 actionsGridEl.innerHTML = '';
                 SOCIAL_ACTIONS.forEach(action => {
                     const button = document.createElement('button');
-                    button.className = 'action-btn full-width';
-                    button.setAttribute('data-xp', action.xp);
-                    button.setAttribute('data-id', action.id);
-                    button.setAttribute('data-type', action.name);
-                    
-                    const contentDiv = document.createElement('div');
-                    contentDiv.className = 'btn-content';
-                    contentDiv.innerHTML = `<span class="btn-emoji">${action.emoji}</span><span>${action.name}</span>`;
-                    
-                    const xpSpan = document.createElement('span');
-                    xpSpan.className = 'btn-xp';
-                    xpSpan.textContent = `+${action.xp} XP`;
-                    
-                    button.appendChild(contentDiv);
-                    button.appendChild(xpSpan);
-                    
+                    button.classList.add('action-btn');
+                    button.innerHTML = `
+                        <div class="btn-content">
+                            <span class="btn-emoji">${action.emoji}</span>
+                            <span>${action.name}</span>
+                        </div>
+                        <span class="btn-xp">+${action.xp} XP</span>
+                    `;
+                    button.addEventListener('click', () => {
+                        grantXP(action.xp, action.name);
+                    });
                     actionsGridEl.appendChild(button);
                 });
             }
 
+            function saveData() {
+                localStorage.setItem('playerData', JSON.stringify(player));
+                localStorage.setItem('actionHistory', JSON.stringify(actionHistory));
+                localStorage.setItem('challengeCompletedToday', player.challengeCompletedToday);
+            }
+
+            function loadData() {
+                const savedPlayer = localStorage.getItem('playerData');
+                if (savedPlayer) {
+                    player = JSON.parse(savedPlayer);
+                }
+                const savedHistory = localStorage.getItem('actionHistory');
+                if (savedHistory) {
+                    actionHistory = JSON.parse(savedHistory);
+                }
+                const savedCompleted = localStorage.getItem('challengeCompletedToday');
+                if (savedCompleted) {
+                    player.challengeCompletedToday = savedCompleted === 'true';
+                }
+            }
+
+            function undoLastAction() {
+                if (actionHistory.length === 0) return;
+                
+                const lastState = actionHistory.pop();
+                player.level = lastState.level;
+                player.xp = lastState.xp;
+                
+                const lastHistoryEntry = player.history.shift();
+                
+                // Réajustement du streak
+                if (player.history.length > 0) {
+                    const lastValidDate = new Date(player.history[0].date).toLocaleDateString('fr-FR');
+                    const lastActionDate = new Date(lastHistoryEntry.date).toLocaleDateString('fr-FR');
+                    if (lastActionDate !== lastValidDate) {
+                        // If the last action was the first of the day, a streak might be broken
+                        const yesterday = new Date(new Date(lastValidDate).setDate(new Date(lastValidDate).getDate() - 1)).toLocaleDateString('fr-FR');
+                        if (yesterday !== new Date(lastState.lastXPDate).toLocaleDateString('fr-FR')) {
+                            // This logic can be tricky, simple approach: re-evaluate streak from scratch
+                            recalculateStreak();
+                        } else {
+                            player.currentStreak--;
+                        }
+                    }
+                    player.lastXPDate = lastValidDate;
+                } else {
+                    player.currentStreak = 0;
+                    player.lastXPDate = null;
+                }
+
+                updateUI();
+                saveData();
+            }
+            
+            function recalculateStreak() {
+                const dates = player.history.map(entry => new Date(entry.date).toDateString());
+                const uniqueDates = [...new Set(dates)].sort((a,b) => new Date(b) - new Date(a));
+                
+                let streak = 0;
+                let lastDate = new Date();
+                let lastDateString = lastDate.toDateString();
+                
+                for(const date of uniqueDates) {
+                    const currentDate = new Date(date);
+                    const diff = Math.floor((lastDate - currentDate) / (1000 * 60 * 60 * 24));
+                    if (diff === 1 || (diff === 0 && lastDate.toDateString() !== currentDate.toDateString())) {
+                        streak++;
+                        lastDate = currentDate;
+                    } else if (diff > 1) {
+                        break;
+                    }
+                }
+                
+                player.currentStreak = streak;
+                player.lastXPDate = uniqueDates.length > 0 ? uniqueDates[0] : null;
+            }
+
+            function checkNewBadges(checkFirstAction = false) {
+                const newlyUnlocked = [];
+                
+                BADGES.forEach(badge => {
+                    const alreadyUnlocked = player.unlockedBadges.find(b => b.name === badge.name);
+                    if (!alreadyUnlocked) {
+                        let shouldUnlock = false;
+                        if (checkFirstAction && badge.firstAction && player.history.length > 0) {
+                            shouldUnlock = true;
+                        } else if (badge.level && player.level >= badge.level) {
+                            shouldUnlock = true;
+                        }
+
+                        if (shouldUnlock) {
+                            newlyUnlocked.push(badge);
+                            player.unlockedBadges.push(badge);
+                            showBadgeUnlocked(badge);
+                        }
+                    }
+                });
+                
+                if (newlyUnlocked.length > 0) {
+                    saveData();
+                }
+            }
+
+            function showBadgeUnlocked(badge) {
+                const popup = document.getElementById('badgeUnlockedPopup');
+                const emojiEl = document.getElementById('badgeEmoji');
+                const nameEl = document.getElementById('badgeName');
+
+                emojiEl.textContent = badge.emoji;
+                nameEl.textContent = badge.name;
+
+                popup.classList.add('show');
+                playSound(badgeSound);
+
+                setTimeout(() => {
+                    popup.classList.remove('show');
+                }, 3000);
+            }
+            
+            function openModal(modal) {
+                modal.classList.add('visible');
+            }
+
+            function closeModal(modal) {
+                modal.classList.remove('visible');
+            }
+            
             function renderBadges() {
                 badgesGrid.innerHTML = '';
                 BADGES.forEach(badge => {
-                    const badgeDiv = document.createElement('div');
-                    badgeDiv.className = 'badge-item';
+                    const badgeItem = document.createElement('div');
+                    badgeItem.classList.add('badge-item');
                     const isUnlocked = player.unlockedBadges.some(b => b.name === badge.name);
                     if (isUnlocked) {
-                        badgeDiv.classList.add('unlocked');
+                        badgeItem.classList.add('unlocked');
                     }
-
-                    badgeDiv.innerHTML = `
-                        <div class="emoji">${badge.emoji}</div>
-                        <p>${badge.name}</p>
-                    `;
-                    badgesGrid.appendChild(badgeDiv);
+                    badgeItem.innerHTML = `<span class="emoji">${badge.emoji}</span><p>${badge.name}</p>`;
+                    badgesGrid.appendChild(badgeItem);
                 });
             }
-            
+
             function renderStats() {
                 totalXPStat.textContent = `${player.history.reduce((sum, entry) => sum + entry.xp, 0)} XP`;
                 totalActionsStat.textContent = player.history.length;
-                
                 historyList.innerHTML = '';
-                player.history.slice(0, 10).forEach(entry => {
+                player.history.forEach(entry => {
                     const li = document.createElement('li');
-                    const date = new Date(entry.date);
-                    li.innerHTML = `<span>${entry.type}</span><span>+${entry.xp} XP</span>`;
+                    const date = new Date(entry.date).toLocaleDateString('fr-FR', {
+                        day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                    });
+                    li.innerHTML = `<span>${entry.type}</span><span>+${entry.xp} XP <small>(${date})</small></span>`;
                     historyList.appendChild(li);
                 });
             }
+            
+            function shareScore() {
+                const shareText = `Je suis niveau ${player.level} et j'ai gagné ${player.history.reduce((sum, entry) => sum + entry.xp, 0)} XP sur XP Social ! 🔥`;
+                
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Mon score XP Social',
+                        text: shareText,
+                        url: window.location.href,
+                    }).catch(error => console.error('Erreur de partage:', error));
+                } else {
+                    alert('Le partage web n\'est pas supporté par votre navigateur. Vous pouvez copier ce texte : ' + shareText);
+                }
+            }
+
+            function resetProgress() {
+                if (confirm('Êtes-vous sûr de vouloir réinitialiser toute votre progression ? Cette action est irréversible.')) {
+                    localStorage.clear();
+                    location.reload();
+                }
+            }
 
             // Event Listeners
-            actionsGridEl.addEventListener('mousedown', (e) => {
-                const button = e.target.closest('.action-btn');
-                if (button) {
-                    const xp = parseInt(button.getAttribute('data-xp'));
-                    const type = button.getAttribute('data-type');
-                    grantXP(xp, type);
-                }
+            menuBtn.addEventListener('click', () => openModal(sideMenuModal));
+            badgesBtn.addEventListener('click', () => {
+                closeModal(sideMenuModal);
+                renderBadges();
+                openModal(badgesModal);
             });
-
-            actionsGridEl.addEventListener('touchstart', (e) => {
-                const button = e.target.closest('.action-btn');
-                if (button) {
-                    const xp = parseInt(button.getAttribute('data-xp'));
-                    const type = button.getAttribute('data-type');
-                    grantXP(xp, type);
-                    if ('vibrate' in navigator) {
-                        navigator.vibrate(50);
-                    }
-                }
+            statsBtn.addEventListener('click', () => {
+                closeModal(sideMenuModal);
+                renderStats();
+                openModal(statsModal);
             });
-
+            shareScoreBtn.addEventListener('click', shareScore);
+            undoBtn.addEventListener('click', undoLastAction);
+            resetBtn.addEventListener('click', resetProgress);
             dailyChallengeBtn.addEventListener('click', () => {
-                claimDailyChallenge();
-            });
-
-            undoBtn.addEventListener('click', () => {
-                if (actionHistory.length > 0) {
-                    const lastState = actionHistory.pop();
-                    player.level = lastState.level;
-                    player.xp = lastState.xp;
-                    player.history.splice(lastState.historyLength, player.history.length - lastState.historyLength);
-                    
-                    // Re-calculate streak and lastXPDate from history
-                    if (player.history.length > 0) {
-                        const lastDateStr = new Date(player.history[0].date).toLocaleDateString('fr-FR');
-                        if (lastDateStr !== new Date().toLocaleDateString('fr-FR')) {
-                            // Reset streak if the last action was from a previous day
-                            player.currentStreak = 0;
-                        } else {
-                            // Otherwise, keep the streak
-                            updateStreak();
-                        }
-                        player.lastXPDate = lastDateStr;
-                    } else {
-                        player.lastXPDate = null;
-                        player.currentStreak = 0;
-                    }
-                    
-                    // Re-check for badges based on new state
-                    const badgesToKeep = BADGES.filter(b => b.level <= player.level || b.firstAction && player.history.length > 0);
-                    player.unlockedBadges = badgesToKeep;
-
-                    updateUI();
-                    saveData();
-                }
-            });
-
-            resetBtn.addEventListener('click', () => {
-                if (confirm('Êtes-vous sûr de vouloir réinitialiser toute votre progression ? Cette action est irréversible.')) {
-                    player = {
-                        level: 1,
-                        xp: 0,
-                        history: [],
-                        lastXPDate: null,
-                        currentStreak: 0,
-                        unlockedBadges: [],
-                        dailyChallenge: null,
-                        challengeCompletedToday: false
-                    };
-                    actionHistory = [];
-                    localStorage.removeItem('playerData');
-                    localStorage.removeItem('lastChallengeDate');
-                    localStorage.removeItem('dailyChallenge');
-                    localStorage.removeItem('challengeCompletedToday');
-                    updateUI();
+                if (!player.challengeCompletedToday) {
+                    grantXP(player.dailyChallenge.xp, `Défi du jour : ${player.dailyChallenge.name}`);
+                    player.challengeCompletedToday = true;
+                    localStorage.setItem('challengeCompletedToday', 'true');
                     renderDailyChallenge();
                 }
             });
-
-            exportBtn.addEventListener('click', () => {
-                const dataStr = JSON.stringify(player, null, 2);
-                const blob = new Blob([dataStr], { type: "application/json" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = "xp_social_progress.json";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            });
-
-            menuBtn.addEventListener('click', () => {
-                showModal(sideMenuModal);
-            });
-
-            badgesBtn.addEventListener('click', () => {
-                renderBadges();
-                showModal(badgesModal);
-                hideModal(sideMenuModal);
-            });
-
-            statsBtn.addEventListener('click', () => {
-                renderStats();
-                showModal(statsModal);
-                hideModal(sideMenuModal);
-            });
             
-            function showModal(modal) {
-                modal.classList.add('visible');
-            }
-            
-            function hideModal(modal) {
-                modal.classList.remove('visible');
-            }
-
             closeButtons.forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const modal = e.target.closest('.modal');
                     if (modal) {
-                        hideModal(modal);
+                        closeModal(modal);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        closeModal(modal);
                     }
                 });
             });
 
-            window.addEventListener('click', (e) => {
-                if (e.target.classList.contains('modal')) {
-                    hideModal(e.target);
-                }
-            });
-            
-            // Initialization
+            // Initialisation
             loadData();
-            updateUI();
-            renderActions();
             getDailyChallenge();
+            renderActions();
+            updateUI();
         });
     </script>
 </body>
