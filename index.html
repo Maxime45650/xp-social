@@ -6,7 +6,7 @@
 <title>XP Social</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="XP">
+<meta name="apple-mobile-web-app-title" content="XP Social">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iIzAwNjlGNiIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0zMS4xIDY4LjRMMzYgNTQuN2wtNi44LTExLjJoNC42bDQuNiA4IDQuNS04aDQuN3wtNi44IDExLjEgNC44IDEzLjdoLTQuOWwtMy4yLTguOS0zLjEgOC45ek01My4zIDY4LjVWNDEuN2g0Ljl2OC42aDcuMXY0LjZoLTcuMXY4LjdjMCAxLjkuNiAyLjggMi40IDIuOGgxLjN2NC41eiIvPjwvc3ZnPg==">
 <link rel="manifest" id="manifest">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
@@ -25,6 +25,7 @@
     --success: #22C55E;
     --warning: #F59E0B;
     --bg-color: #F1F5F9;
+    --scroll-y: 0;
 }
 * {
     margin: 0;
@@ -32,6 +33,9 @@
     box-sizing: border-box;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-tap-highlight-color: transparent;
+}
+html {
+    scroll-behavior: smooth;
 }
 body {
     background: var(--bg-color);
@@ -42,6 +46,12 @@ body {
     align-items: center;
     padding: 20px;
     overflow-x: hidden;
+}
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    top: var(--scroll-y);
 }
 .container {
     width: 100%;
@@ -186,7 +196,8 @@ header p {
 }
 .xp-summary {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
     text-align: center;
     margin-top: 20px;
     padding-top: 20px;
@@ -198,6 +209,8 @@ header p {
 .xp-summary-item.streak p { color: var(--warning); }
 .xp-summary-item.abordages h4,
 .xp-summary-item.abordages p { color: var(--primary); }
+.xp-summary-item.abordages-today h4,
+.xp-summary-item.abordages-today p { color: #25A6F7; }
 
 .mode-switcher {
     display: flex;
@@ -219,6 +232,7 @@ header p {
     transition: all .3s ease;
     color: #64748B;
     user-select: none;
+    touch-action: manipulation;
 }
 .mode-btn.active {
     background-color: var(--white);
@@ -251,6 +265,7 @@ header p {
     transition: all .3s ease;
     animation: pulse 2s infinite;
     user-select: none;
+    touch-action: manipulation;
 }
 #newInteractionBtn:hover {
     transform: translateY(-3px);
@@ -282,6 +297,7 @@ header p {
     align-items: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, .05);
     user-select: none;
+    touch-action: manipulation;
 }
 .action-btn:hover {
     border-color: var(--primary-light);
@@ -309,7 +325,7 @@ header p {
     border: 1px solid var(--accent);
     border-radius: 12px;
     padding: 16px;
-    margin-top: 24px; /* Added margin */
+    margin-top: 24px;
     background: #faf5ff;
 }
 .daily-challenge h3 {
@@ -335,6 +351,7 @@ header p {
     cursor: pointer;
     transition: all .3s ease;
     user-select: none;
+    touch-action: manipulation;
 }
 .daily-challenge-btn:hover:not(:disabled) { background-color: #7c3aed; }
 .daily-challenge-btn:disabled { background-color: #a7a2b0; color: #e2e8f0; cursor: not-allowed; }
@@ -358,6 +375,7 @@ header p {
     cursor: pointer;
     transition: all .2s ease;
     user-select: none;
+    touch-action: manipulation;
 }
 #undoBtn:hover { background: var(--neutral-light); border-color: var(--neutral-border); }
 #undoBtn:active { background: #DCE3ED; transform: scale(.98); }
@@ -443,6 +461,7 @@ header p {
     transition: all .2s ease;
     user-select: none;
     position: relative;
+    touch-action: manipulation;
 }
 .girl-type .emoji { font-size: 28px; pointer-events: none; }
 .girl-type span, .girl-type p { pointer-events: none; }
@@ -478,6 +497,7 @@ header p {
     border: 1px solid var(--neutral-border);
     transition: all .2s ease;
     user-select: none;
+    touch-action: manipulation;
 }
 .action-checkbox-label .content {
     flex-grow: 1;
@@ -536,6 +556,7 @@ header p {
     cursor: pointer;
     background: linear-gradient(45deg, var(--ddr-primary), var(--ddr-secondary));
     user-select: none;
+    touch-action: manipulation;
 }
 #ddrSubmitBtn:active { transform: scale(.98); }
 
@@ -580,6 +601,7 @@ header p {
     cursor: pointer;
     transition: background-color .3s ease;
     user-select: none;
+    touch-action: manipulation;
 }
 .export-btn-modal:hover { background-color: #cfdcf4; }
 .export-btn-modal:active { background-color: #b8c7e8; transform: scale(.98); }
@@ -653,7 +675,6 @@ header p {
     0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
     100% { transform: translateY(1000px) rotate(720deg); opacity: 0; }
 }
-main { margin-bottom: 0; } /* Adjusted margin */
 </style>
 </head>
 <body>
@@ -689,9 +710,10 @@ main { margin-bottom: 0; } /* Adjusted margin */
             </div>
         </div>
         <div class="xp-summary">
-            <div class="xp-summary-item abordages"><h4 id="abordageCount">0</h4><p>Abordages</p></div>
-            <div class="xp-summary-item"><h4 id="xpToday">0</h4><p>XP du jour</p></div>
-            <div class="xp-summary-item streak"><h4 id="streakDays">0</h4><p>jours 🔥</p></div>
+            <div class="xp-summary-item abordages"><h4 id="totalAbordageCount">0</h4><p>Abordages Total</p></div>
+            <div class="xp-summary-item abordages-today"><h4 id="dailyAbordageCount">0</h4><p>Abordages du Jour</p></div>
+            <div class="xp-summary-item"><h4 id="xpToday">0</h4><p>XP du Jour</p></div>
+            <div class="xp-summary-item streak"><h4 id="streakDays">0</h4><p>Jours 🔥</p></div>
         </div>
     </section>
 
@@ -867,7 +889,8 @@ document.addEventListener('DOMContentLoaded', () => {
         xpBar: document.getElementById('xpBar'),
         currentXP: document.getElementById('currentXP'),
         nextLevelXP: document.getElementById('nextLevelXP'),
-        abordageCount: document.getElementById('abordageCount'),
+        totalAbordageCount: document.getElementById('totalAbordageCount'),
+        dailyAbordageCount: document.getElementById('dailyAbordageCount'),
         xpToday: document.getElementById('xpToday'),
         streakDays: document.getElementById('streakDays'),
         xpPopup: document.getElementById('xpPopup'),
@@ -906,11 +929,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetPlayerState = () => ({
         level: 1,
         xp: 0,
-        history: [],
+        history: [], // Maintenu pour la compatibilité, mais la nouvelle gestion est plus robuste
         lastXPDate: null,
         currentStreak: 0,
         unlockedBadges: [],
         stats: { abordages: 0, whatsapp: 0, instagram: 0, bisous: 0 },
+        dailyStats: { date: null, xp: 0, abordages: 0 },
         mode: 'ddr',
         dailyChallenge: null,
         lastChallengeDate: null,
@@ -931,6 +955,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const savedPlayer = localStorage.getItem('socialXPPlayer');
             const savedHistory = localStorage.getItem('socialXPActionHistory');
             player = savedPlayer ? JSON.parse(savedPlayer) : resetPlayerState();
+            // Assurer que les nouvelles propriétés existent
+            player.dailyStats = player.dailyStats || { date: null, xp: 0, abordages: 0 };
+            player.stats = player.stats || { abordages: 0, whatsapp: 0, instagram: 0, bisous: 0 };
+
             actionHistory = savedHistory ? JSON.parse(savedHistory) : [];
         } catch (e) {
             console.error("Failed to load data, resetting state:", e);
@@ -942,340 +970,457 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Core Logic ---
     const getXPNeededForNextLevel = level => Math.floor(XP_BASE * Math.pow(XP_FACTOR, level - 1));
 
-    const grantXP = (amount, type, details = {}) => {
+    const grantXP = (amount, type, details = {}, options = { isAbordage: false }) => {
         if (amount <= 0) return;
 
         const stateBefore = JSON.parse(JSON.stringify(player));
+        
         player.xp += amount;
-        let leveledUp = false;
+        player.dailyStats.xp += amount;
+        
+        if (options.isAbordage) {
+            player.stats.abordages = (player.stats.abordages || 0) + 1;
+            player.dailyStats.abordages = (player.dailyStats.abordages || 0) + 1;
+        }
+        
+        updateStreak();
 
+        const historyEntry = { stateBefore, amount, type, details, options, timestamp: Date.now() };
+        actionHistory.push(historyEntry);
+        if (actionHistory.length > 20) actionHistory.shift();
+
+        let leveledUp = false;
         let xpNeeded = getXPNeededForNextLevel(player.level);
         while (player.xp >= xpNeeded) {
             player.level++;
             player.xp -= xpNeeded;
             leveledUp = true;
             xpNeeded = getXPNeededForNextLevel(player.level);
+            checkBadges();
         }
-
-        addHistoryEntry(amount, type, details);
-        actionHistory.push({ xp: amount, type, details, timestamp: new Date().toISOString(), stateBefore });
-        if(actionHistory.length > 20) actionHistory.shift(); 
-
-        updateStreak();
-        showXpPopup(amount);
 
         if (leveledUp) {
-            triggerLevelUpAnimation();
-            createConfetti(30);
-            playSound(dom.soundEffect);
+            dom.soundEffect.play().catch(e => console.log("Audio play failed:", e));
+            dom.levelNumber.classList.add('level-up');
+            setTimeout(() => dom.levelNumber.classList.remove('level-up'), 500);
         }
 
-        checkAndUnlockBadges();
+        showXpPopup(amount);
         updateUI();
+        checkBadges();
         saveData();
     };
     
-    const addHistoryEntry = (amount, type, details = {}) => {
-        const entry = { date: new Date().toISOString(), xp: amount, type: type, details: details };
-        player.history.unshift(entry);
-        if (player.history.length > 50) player.history.pop();
-    };
-
-    const updateStreak = () => {
-        const today = new Date();
-        const lastDate = player.lastXPDate ? new Date(player.lastXPDate) : null;
-
-        if (!lastDate || today.toDateString() === lastDate.toDateString()) {
-            // Same day, do nothing
-        } else {
-            const yesterday = new Date(today);
-            yesterday.setDate(today.getDate() - 1);
-            if (lastDate && lastDate.toDateString() === yesterday.toDateString()) {
-                player.currentStreak++;
-            } else {
-                player.currentStreak = 1;
-            }
-        }
-        player.lastXPDate = today.toDateString();
-    };
-
     const undoLastAction = () => {
         if (actionHistory.length === 0) {
-            alert("Rien à annuler.");
+            alert("Aucune action à annuler.");
             return;
         }
-        player = actionHistory.pop().stateBefore;
-        setupDailyChallenge(); // Re-check challenge state after undo
-        updateUI();
-        saveData();
-        alert("Dernière action annulée.");
-    };
 
-    // --- UI Update & Rendering ---
+        const lastAction = actionHistory.pop();
+        if (lastAction && lastAction.stateBefore) {
+            player = JSON.parse(JSON.stringify(lastAction.stateBefore));
+            updateUI();
+            saveData();
+            alert("Dernière action annulée !");
+        }
+    };
+    
+    // --- UI Update ---
     const updateUI = () => {
-        const xpNeeded = getXPNeededForNextLevel(player.level);
-        const xpPercent = Math.min(player.xp / xpNeeded * 100, 100);
-        const circumference = 2 * Math.PI * 31;
-        dom.progressFill.style.strokeDashoffset = circumference - (xpPercent / 100) * circumference;
-        dom.xpBar.style.width = `${xpPercent}%`;
+        // Level and XP Circle
         dom.levelNumber.textContent = player.level;
+        const xpNeeded = getXPNeededForNextLevel(player.level);
+        const progressPercent = player.xp / xpNeeded;
+        const circumference = 194.78;
+        dom.progressFill.style.strokeDashoffset = circumference * (1 - progressPercent);
+        
+        // XP Bar
+        dom.xpBar.style.width = `${progressPercent * 100}%`;
         dom.currentXP.textContent = `${Math.floor(player.xp)} XP`;
         dom.nextLevelXP.textContent = `${xpNeeded} XP`;
-        dom.abordageCount.textContent = player.stats.abordages || 0;
-        dom.streakDays.textContent = player.currentStreak;
 
-        const todayStr = new Date().toISOString().split('T')[0];
-        const todayXP = player.history
-            .filter(entry => new Date(entry.date).toISOString().split('T')[0] === todayStr)
-            .reduce((sum, entry) => sum + entry.xp, 0);
-        dom.xpToday.textContent = todayXP;
+        // Summary Stats
+        dom.totalAbordageCount.textContent = player.stats.abordages || 0;
+        dom.dailyAbordageCount.textContent = player.dailyStats.abordages || 0;
+        dom.xpToday.textContent = player.dailyStats.xp || 0;
+        dom.streakDays.textContent = player.currentStreak || 0;
+
+        // Modals
+        updateStatsModal();
+        populateBadges();
         
-        const isDDR = player.mode === 'ddr';
-        dom.ddrModeContainer.classList.toggle('active', isDDR);
-        dom.echauffementModeContainer.classList.toggle('active', !isDDR);
-        dom.modeSwitcher.querySelector('#ddrModeBtn').classList.toggle('active', isDDR);
-        dom.modeSwitcher.querySelector('#echauffementModeBtn').classList.toggle('active', !isDDR);
-        
+        // Buttons
         dom.undoBtn.disabled = actionHistory.length === 0;
     };
 
-    const buildContent = {
-        echauffement: () => {
-            dom.actionsGrid.innerHTML = ECHAUFFEMENT_ACTIONS.map(action => `
-                <button class="action-btn" data-action-id="${action.id}">
-                    <div class="btn-content">
-                        <span class="btn-emoji">${action.emoji}</span>
-                        <span>${action.name}</span>
-                    </div>
-                    <span class="btn-xp">+${action.xp} XP</span>
-                </button>
-            `).join('');
-        },
-        ddrModal: () => {
-            dom.girlTypesContainer.innerHTML = DDR_GIRL_TYPES.map((type, i) => `
-                <label class="girl-type ${i === 0 ? 'selected' : ''}" for="girl-${type.id}">
-                    <div class="emoji">${type.emoji}</div>
-                    <span>${type.name}</span><p>x${type.multiplier.toFixed(1)} XP</p>
-                    <input type="radio" name="girlType" value="${type.multiplier}" id="girl-${type.id}" ${i === 0 ? 'checked' : ''}>
-                </label>
-            `).join('');
-            dom.ddrActionsContainer.innerHTML = DDR_ACTIONS.map(a => `
-                <label class="action-checkbox-label" for="action-${a.id}">
-                    <input type="checkbox" id="action-${a.id}" data-action-id="${a.id}">
-                    <div class="custom-checkbox"></div>
-                    <div class="content"><span>${a.emoji} ${a.name}</span></div>
-                    <span class="xp-tag">+${a.xp} XP</span>
-                </label>
-            `).join('');
-        },
-        badgesModal: () => {
-            dom.badgesGrid.innerHTML = BADGES.map(b => `
-                <div class="badge-item ${player.unlockedBadges.includes(b.id) ? 'unlocked' : ''}">
-                    <div class="emoji">${b.emoji}</div><p>${b.name}</p>
-                </div>
-            `).join('');
-        },
-        statsModal: () => {
-            const totalXP = player.history.reduce((sum, entry) => sum + entry.xp, 0) + player.xp;
-            dom.totalXPStat.textContent = `${Math.floor(totalXP)} XP`;
-            dom.totalActionsStat.textContent = player.history.length;
-            dom.historyList.innerHTML = player.history.slice(0, 5).map(entry => `
-                <li>
-                    <span>${entry.type} (${new Date(entry.date).toLocaleTimeString()})</span>
-                    <strong>+${entry.xp} XP</strong>
-                </li>
-            `).join('');
-        }
-    };
-    
-    // --- Animations & Effects ---
-    const playSound = el => el && el.play().catch(e => console.error("Audio failed:", e));
-    const showXpPopup = amount => {
+    const showXpPopup = (amount) => {
         dom.xpPopup.textContent = `+${amount} XP`;
         dom.xpPopup.classList.add('show');
-        setTimeout(() => dom.xpPopup.classList.remove('show'), 1500);
+        setTimeout(() => {
+            dom.xpPopup.classList.remove('show');
+        }, 1500);
     };
-    const triggerLevelUpAnimation = () => {
-        dom.levelNumber.classList.add('level-up');
-        setTimeout(() => dom.levelNumber.classList.remove('level-up'), 500);
-    };
-    const createConfetti = count => {
-        for (let i = 0; i < count; i++) {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.backgroundColor = `hsl(${Math.random()*360},100%,75%)`;
-            confetti.style.left = `${Math.random()*100}vw`;
-            confetti.style.animationDelay = `${Math.random()*0.5}s`;
-            document.body.appendChild(confetti);
-            setTimeout(() => confetti.remove(), 3000);
-        }
-    };
-    const showBadgeUnlocked = badge => {
-        dom.badgeEmoji.textContent = badge.emoji;
-        dom.badgeName.textContent = badge.name;
-        dom.badgeUnlockedPopup.classList.add('show');
-        setTimeout(() => dom.badgeUnlockedPopup.classList.remove('show'), 3000);
+
+    // --- Date & Streak Management ---
+    const getTodayDateString = () => {
+        const today = new Date();
+        return today.toISOString().split('T')[0];
     };
     
-    // --- Feature Logic ---
-    const checkAndUnlockBadges = () => {
-        BADGES.forEach(badge => {
-            if (player.unlockedBadges.includes(badge.id)) return;
-            let unlocked = false;
-            if (badge.type === 'level' && player.level >= badge.requirement) unlocked = true;
-            else if (badge.type === 'stat' && player.stats[badge.stat] >= badge.requirement) unlocked = true;
+    const checkDailyReset = () => {
+        const todayStr = getTodayDateString();
+        if (player.dailyStats.date !== todayStr) {
+            // Check streak before resetting
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
             
-            if (unlocked) {
-                player.unlockedBadges.push(badge.id);
-                showBadgeUnlocked(badge);
-                playSound(dom.badgeSound);
+            if (player.dailyStats.date !== yesterdayStr) {
+                player.currentStreak = 0; // Streak broken
             }
-        });
-    };
 
-    const renderDailyChallenge = () => {
-        if (!player.dailyChallenge) return;
-        dom.dailyChallengeDescription.textContent = player.dailyChallenge.name;
-        const btn = dom.dailyChallengeBtn;
-        if (player.dailyChallenge.completed) {
-            btn.textContent = 'Défi terminé ! 🎉';
-            btn.disabled = true;
+            // Reset daily stats
+            player.dailyStats = {
+                date: todayStr,
+                xp: 0,
+                abordages: 0
+            };
+        }
+    };
+    
+    const updateStreak = () => {
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];
+
+        if (!player.lastXPDate) {
+            player.currentStreak = 1;
         } else {
-            btn.textContent = `Valider le défi (+${player.dailyChallenge.xp} XP)`;
-            btn.disabled = false;
+            const lastDate = new Date(player.lastXPDate);
+            const diffTime = today - lastDate;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) {
+                player.currentStreak++;
+            } else if (diffDays > 1) {
+                player.currentStreak = 1; // Streak reset
+            }
+            // If diffDays is 0, do nothing (same day)
         }
-        dom.dailyChallengeSection.style.display = 'block';
+        player.lastXPDate = todayStr;
     };
 
-    const setupDailyChallenge = () => {
-        const todayStr = new Date().toISOString().split('T')[0];
-        if (player.lastChallengeDate !== todayStr) {
-            const challengeIndex = Math.floor(Math.random() * DAILY_CHALLENGES.length);
-            player.dailyChallenge = { ...DAILY_CHALLENGES[challengeIndex], completed: false };
-            player.lastChallengeDate = todayStr;
-            saveData();
+
+    // --- Mode Switcher ---
+    const switchMode = (mode) => {
+        player.mode = mode;
+        document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.mode-container').forEach(c => c.classList.remove('active'));
+        if (mode === 'ddr') {
+            document.getElementById('ddrModeBtn').classList.add('active');
+            dom.ddrModeContainer.classList.add('active');
+        } else {
+            document.getElementById('echauffementModeBtn').classList.add('active');
+            dom.echauffementModeContainer.classList.add('active');
         }
-        renderDailyChallenge();
+        saveData();
     };
 
     // --- Modal Management ---
-    const openModal = modal => modal.classList.add('visible');
-    const closeModal = modal => modal.classList.remove('visible');
-    
-    // --- Event Handlers ---
-    const handleSubmitDDR = () => {
-        const multiplier = parseFloat(dom.ddrModal.querySelector('input[name="girlType"]:checked').value);
-        const selectedActions = [...dom.ddrActionsContainer.querySelectorAll('input:checked')];
-        let totalXP = 0;
-        let details = [];
+    let openModals = [];
 
-        selectedActions.forEach(checkbox => {
-            const actionId = checkbox.dataset.actionId;
-            const action = DDR_ACTIONS.find(a => a.id === actionId);
-            if(action) {
-                totalXP += action.xp;
-                details.push(action.name);
-                const statMap = { abordage: 'abordages', duo: 'abordages', trio: 'abordages', groupe: 'abordages', whatsapp: 'whatsapp', instagram: 'instagram', bisou: 'bisous' };
-                if (statMap[action.id]) {
-                    player.stats[statMap[action.id]] = (player.stats[statMap[action.id]] || 0) + 1;
-                }
-            }
-        });
-
-        if (totalXP > 0) {
-            grantXP(Math.round(totalXP * multiplier), 'Interaction DDR', { actions: details.join(', '), multiplier });
+    const openModal = (modal) => {
+        if (!modal) return;
+        if (openModals.length === 0) {
+             const scrollY = window.scrollY;
+             document.body.style.setProperty('--scroll-y', `-${scrollY}px`);
+             document.body.classList.add('modal-open');
         }
-        closeModal(dom.ddrModal);
+        modal.classList.add('visible');
+        openModals.push(modal);
     };
 
-    const setupEventListeners = () => {
-        // --- Central event listener using delegation ---
-        document.body.addEventListener('click', e => {
-            const target = e.target;
-            
-            // --- App Container Clicks ---
-            if (dom.appContainer.contains(target)) {
-                const modeBtn = target.closest('.mode-btn');
-                if (modeBtn) {
-                    player.mode = modeBtn.id === 'ddrModeBtn' ? 'ddr' : 'echauffement';
-                    updateUI(); saveData(); return;
-                }
-                if (target.id === 'newInteractionBtn') {
-                    buildContent.ddrModal(); openModal(dom.ddrModal); return;
-                }
-                const actionBtn = target.closest('#actionsGrid .action-btn');
-                if(actionBtn) {
-                    const action = ECHAUFFEMENT_ACTIONS.find(a => a.id === actionBtn.dataset.actionId);
-                    if (action) grantXP(action.xp, action.name);
-                    return;
-                }
-                if (target.id === 'undoBtn') {
-                    undoLastAction(); return;
-                }
-                if (target.id === 'menuBtn') {
-                    openModal(dom.sideMenuModal); return;
-                }
-                if (target.id === 'dailyChallengeBtn' && !target.disabled) {
-                    const challenge = player.dailyChallenge;
-                    if (challenge && !challenge.completed) {
-                        grantXP(challenge.xp, 'Défi du jour');
-                        challenge.completed = true;
-                        renderDailyChallenge(); saveData();
-                    }
-                    return;
-                }
-            }
+    const closeModal = (modal) => {
+        if (!modal) return;
+        modal.classList.remove('visible');
+        openModals = openModals.filter(m => m !== modal);
 
-            // --- DDR Modal Clicks ---
-            if (dom.ddrModal.contains(target)) {
-                const girlTypeLabel = target.closest('.girl-type');
-                if (girlTypeLabel) {
-                    dom.ddrModal.querySelector('.selected')?.classList.remove('selected');
-                    girlTypeLabel.classList.add('selected');
-                    girlTypeLabel.querySelector('input').checked = true;
-                    return;
-                }
-                if(target.id === 'ddrSubmitBtn') {
-                    handleSubmitDDR(); return;
-                }
+        if (openModals.length === 0) {
+            const scrollY = document.body.style.getPropertyValue('--scroll-y');
+            document.body.classList.remove('modal-open');
+            document.body.style.removeProperty('--scroll-y');
+            if (scrollY) {
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
             }
-
-            // --- Side Menu Modal Clicks ---
-            if (dom.sideMenuModal.contains(target)) {
-                const modalTargetBtn = target.closest('[data-modal-target]');
-                if(modalTargetBtn) {
-                    const targetModalId = modalTargetBtn.dataset.modalTarget;
-                    const targetModal = document.getElementById(targetModalId);
-                    if (targetModal) {
-                        if (targetModalId === 'badgesModal') buildContent.badgesModal();
-                        if (targetModalId === 'statsModal') buildContent.statsModal();
-                        closeModal(dom.sideMenuModal); openModal(targetModal);
-                    }
-                    return;
-                }
-                if (target.id === 'resetBtn') {
-                    if(confirm("Es-tu sûr de vouloir réinitialiser toute ta progression ? Cette action est irréversible.")) {
-                        player = resetPlayerState(); actionHistory = [];
-                        saveData(); location.reload();
-                    }
-                    return;
-                }
-            }
-
-            // --- Generic Modal Close ---
-            if (target.hasAttribute('data-close')) {
-                const modal = target.closest('.modal');
-                if (modal) closeModal(modal);
-            }
+        }
+    };
+    
+    // --- Populators ---
+    const populateActions = () => {
+        dom.actionsGrid.innerHTML = '';
+        ECHAUFFEMENT_ACTIONS.forEach(action => {
+            const button = document.createElement('button');
+            button.className = 'action-btn';
+            button.dataset.actionId = action.id;
+            button.innerHTML = `
+                <div class="btn-content">
+                    <span class="btn-emoji">${action.emoji}</span>
+                    <span>${action.name}</span>
+                </div>
+                <span class="btn-xp">+${action.xp} XP</span>
+            `;
+            dom.actionsGrid.appendChild(button);
         });
     };
     
+    const populateDdrModal = () => {
+        dom.girlTypesContainer.innerHTML = '';
+        DDR_GIRL_TYPES.forEach(type => {
+            const label = document.createElement('label');
+            label.className = 'girl-type';
+            label.innerHTML = `
+                <input type="radio" name="girlType" value="${type.id}">
+                <div class="emoji">${type.emoji}</div>
+                <span>${type.name}</span>
+                <p>x${type.multiplier}</p>
+            `;
+            dom.girlTypesContainer.appendChild(label);
+        });
+
+        dom.ddrActionsContainer.innerHTML = '';
+        DDR_ACTIONS.forEach(action => {
+            const label = document.createElement('label');
+            label.className = 'action-checkbox-label';
+            label.innerHTML = `
+                <input type="checkbox" value="${action.id}">
+                <div class="custom-checkbox"></div>
+                <div class="content">
+                    <span class="emoji">${action.emoji}</span>
+                    <span>${action.name}</span>
+                </div>
+                <span class="xp-tag">+${action.xp}</span>
+            `;
+            dom.ddrActionsContainer.appendChild(label);
+        });
+    };
+
+    const populateBadges = () => {
+        dom.badgesGrid.innerHTML = '';
+        BADGES.forEach(badge => {
+            const isUnlocked = player.unlockedBadges.includes(badge.id);
+            const badgeEl = document.createElement('div');
+            badgeEl.className = `badge-item ${isUnlocked ? 'unlocked' : ''}`;
+            badgeEl.innerHTML = `<div class="emoji">${badge.emoji}</div><p>${badge.name}</p>`;
+            dom.badgesGrid.appendChild(badgeEl);
+        });
+    };
+    
+    const updateStatsModal = () => {
+        let totalXp = player.xp;
+        for (let i = 1; i < player.level; i++) {
+            totalXp += getXPNeededForNextLevel(i);
+        }
+        dom.totalXPStat.textContent = `${Math.floor(totalXp)} XP`;
+        dom.totalActionsStat.textContent = actionHistory.length;
+
+        dom.historyList.innerHTML = '';
+        [...actionHistory].reverse().slice(0, 5).forEach(item => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${item.type}</span><span>+${item.amount} XP</span>`;
+            dom.historyList.appendChild(li);
+        });
+    };
+
+    // --- Badge Logic ---
+    const checkBadges = () => {
+        BADGES.forEach(badge => {
+            if (player.unlockedBadges.includes(badge.id)) return;
+
+            let unlocked = false;
+            if (badge.type === 'level' && player.level >= badge.requirement) {
+                unlocked = true;
+            } else if (badge.type === 'stat') {
+                const statValue = player.stats[badge.stat] || 0;
+                if (statValue >= badge.requirement) {
+                    unlocked = true;
+                }
+            }
+
+            if (unlocked) {
+                player.unlockedBadges.push(badge.id);
+                showBadgePopup(badge);
+            }
+        });
+    };
+
+    const showBadgePopup = (badge) => {
+        dom.badgeEmoji.textContent = badge.emoji;
+        dom.badgeName.textContent = badge.name;
+        dom.badgeUnlockedPopup.classList.add('show');
+        dom.badgeSound.play().catch(e => console.log("Badge audio failed:", e));
+
+        // Confetti effect
+        for (let i = 0; i < 50; i++) {
+            createConfetti();
+        }
+
+        setTimeout(() => {
+            dom.badgeUnlockedPopup.classList.remove('show');
+        }, 3000);
+    };
+
+    const createConfetti = () => {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.animationDuration = `${Math.random() * 2 + 3}s`;
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 5000);
+    };
+
+    // --- Daily Challenge ---
+    const setupDailyChallenge = () => {
+        const todayStr = getTodayDateString();
+        if (player.lastChallengeDate !== todayStr) {
+            const challengeIndex = new Date(todayStr).getDate() % DAILY_CHALLENGES.length;
+            player.dailyChallenge = { ...DAILY_CHALLENGES[challengeIndex], completed: false };
+            player.lastChallengeDate = todayStr;
+        }
+
+        if (player.dailyChallenge) {
+            dom.dailyChallengeDescription.textContent = player.dailyChallenge.name;
+            dom.dailyChallengeBtn.textContent = `Valider (+${player.dailyChallenge.xp} XP)`;
+            dom.dailyChallengeBtn.disabled = player.dailyChallenge.completed;
+            dom.dailyChallengeSection.style.display = 'block';
+        } else {
+            dom.dailyChallengeSection.style.display = 'none';
+        }
+    };
+    
+    // --- Event Listeners ---
+    const setupEventListeners = () => {
+        dom.modeSwitcher.addEventListener('click', e => {
+            if (e.target.id === 'ddrModeBtn') switchMode('ddr');
+            if (e.target.id === 'echauffementModeBtn') switchMode('echauffement');
+        });
+
+        // Event delegation for "Échauffement" actions
+        dom.echauffementModeContainer.addEventListener('click', e => {
+            const btn = e.target.closest('.action-btn');
+            if (!btn) return;
+            const actionId = btn.dataset.actionId;
+            const action = ECHAUFFEMENT_ACTIONS.find(a => a.id === actionId);
+            if (action) {
+                grantXP(action.xp, action.name, {}, { isAbordage: true });
+            }
+        });
+
+        dom.newInteractionBtn.addEventListener('click', () => openModal(dom.ddrModal));
+
+        dom.ddrSubmitBtn.addEventListener('click', () => {
+            const selectedTypeEl = dom.girlTypesContainer.querySelector('input:checked');
+            if (!selectedTypeEl) {
+                alert("Veuillez sélectionner un type de fille.");
+                return;
+            }
+            const type = DDR_GIRL_TYPES.find(t => t.id === selectedTypeEl.value);
+            const multiplier = type.multiplier;
+
+            let totalXP = 0;
+            const selectedActions = [];
+            dom.ddrActionsContainer.querySelectorAll('input:checked').forEach(checkbox => {
+                const action = DDR_ACTIONS.find(a => a.id === checkbox.value);
+                totalXP += action.xp;
+                selectedActions.push(action.name);
+            });
+            
+            if (totalXP === 0) {
+                 alert("Veuillez sélectionner au moins une action.");
+                return;
+            }
+
+            const finalXP = Math.round(totalXP * multiplier);
+            grantXP(finalXP, 'Interaction DDR', { actions: selectedActions, multiplier }, { isAbordage: true });
+
+            closeModal(dom.ddrModal);
+            // Reset form
+            selectedTypeEl.checked = false;
+            dom.girlTypesContainer.querySelector('.selected')?.classList.remove('selected');
+            dom.ddrActionsContainer.querySelectorAll('input:checked').forEach(c => c.checked = false);
+        });
+
+        // Event delegation for DDR modal inputs
+        dom.girlTypesContainer.addEventListener('click', e => {
+            const label = e.target.closest('.girl-type');
+            if (label) {
+                dom.girlTypesContainer.querySelectorAll('.selected').forEach(el => el.classList.remove('selected'));
+                label.classList.add('selected');
+                const radio = label.querySelector('input');
+                if(radio) radio.checked = true;
+            }
+        });
+        
+        dom.menuBtn.addEventListener('click', () => openModal(dom.sideMenuModal));
+        dom.undoBtn.addEventListener('click', undoLastAction);
+        
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (confirm("Êtes-vous sûr de vouloir réinitialiser toute votre progression ? Cette action est irréversible.")) {
+                localStorage.removeItem('socialXPPlayer');
+                localStorage.removeItem('socialXPActionHistory');
+                player = resetPlayerState();
+                actionHistory = [];
+                location.reload();
+            }
+        });
+        
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            const dataStr = JSON.stringify({ player, actionHistory }, null, 2);
+            const blob = new Blob([dataStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `xp-social-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+        
+        dom.dailyChallengeBtn.addEventListener('click', e => {
+            if (!player.dailyChallenge.completed) {
+                grantXP(player.dailyChallenge.xp, "Défi du jour", { name: player.dailyChallenge.name });
+                player.dailyChallenge.completed = true;
+                e.target.disabled = true;
+                saveData();
+            }
+        });
+
+        // Global listeners for modals
+        document.addEventListener('click', e => {
+            if (e.target.dataset.modalTarget) {
+                const modal = document.getElementById(e.target.dataset.modalTarget);
+                openModal(modal);
+            }
+            if (e.target.hasAttribute('data-close')) {
+                closeModal(e.target.closest('.modal'));
+            }
+        });
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && openModals.length > 0) {
+                closeModal(openModals[openModals.length - 1]);
+            }
+        });
+    };
+
     // --- Initialization ---
     const init = () => {
         loadData();
-        buildContent.echauffement();
-        setupEventListeners();
+        checkDailyReset();
+        switchMode(player.mode || 'ddr');
+        populateActions();
+        populateDdrModal();
         setupDailyChallenge();
+        setupEventListeners();
         updateUI();
     };
 
